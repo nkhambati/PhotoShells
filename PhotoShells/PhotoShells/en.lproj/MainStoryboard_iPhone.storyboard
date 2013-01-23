@@ -99,7 +99,22 @@
                     <view key="view" contentMode="scaleToFill" id="wzh-zV-jST">
                         <rect key="frame" x="0.0" y="20" width="320" height="499"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Categorize my Pictures ..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgS-td-wci">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="197" id="6u0-lU-cB9"/>
+                                    <constraint firstAttribute="height" constant="28" id="a1A-qg-Nbg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="dgS-td-wci" firstAttribute="top" secondItem="wzh-zV-jST" secondAttribute="top" constant="26" id="B2e-hL-aEt"/>
+                            <constraint firstItem="dgS-td-wci" firstAttribute="leading" secondItem="wzh-zV-jST" secondAttribute="leading" constant="63" id="X5r-Vw-qt3"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Item" id="oQC-4f-e2n"/>
                 </viewController>
