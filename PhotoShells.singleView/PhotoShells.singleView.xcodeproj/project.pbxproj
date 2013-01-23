@@ -23,6 +23,7 @@
 		B2E30AB616B07CAA002C9E32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E30A9116B07CAA002C9E32 /* Foundation.framework */; };
 		B2E30ABE16B07CAA002C9E32 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B2E30ABC16B07CAA002C9E32 /* InfoPlist.strings */; };
 		B2E30AC116B07CAA002C9E32 /* PhotoShells_singleViewTests.m in Sources */ = {isa = PBXBuildFile; fileRef = B2E30AC016B07CAA002C9E32 /* PhotoShells_singleViewTests.m */; };
+		B2E30ACB16B07D71002C9E32 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = B2E30ACA16B07D71002C9E32 /* logo.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +59,7 @@
 		B2E30ABD16B07CAA002C9E32 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		B2E30ABF16B07CAA002C9E32 /* PhotoShells_singleViewTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoShells_singleViewTests.h; sourceTree = "<group>"; };
 		B2E30AC016B07CAA002C9E32 /* PhotoShells_singleViewTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoShells_singleViewTests.m; sourceTree = "<group>"; };
+		B2E30ACA16B07D71002C9E32 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 		B2E30A8016B07CAA002C9E32 = {
 			isa = PBXGroup;
 			children = (
+				B2E30ACA16B07D71002C9E32 /* logo.png */,
 				B2E30A9516B07CAA002C9E32 /* PhotoShells.singleView */,
 				B2E30AB916B07CAA002C9E32 /* PhotoShells.singleViewTests */,
 				B2E30A8E16B07CAA002C9E32 /* Frameworks */,
@@ -236,6 +239,7 @@
 				B2E30AA416B07CAA002C9E32 /* Default@2x.png in Resources */,
 				B2E30AA616B07CAA002C9E32 /* Default-568h@2x.png in Resources */,
 				B2E30AA916B07CAA002C9E32 /* MainStoryboard.storyboard in Resources */,
+				B2E30ACB16B07D71002C9E32 /* logo.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
