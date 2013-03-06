@@ -12,7 +12,7 @@ static int count = 0;
 
 @implementation PictureManager
 
--(void)fetchPictures
+-(NSMutableArray*)fetchPictures
 {
     // Initializing Variables
     imgA=[[NSArray alloc] init];
@@ -73,6 +73,8 @@ static int count = 0;
                          failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
     
 }
+
+
 
 
 -(void)CopyPictureToAlbum:(NSURL *)url

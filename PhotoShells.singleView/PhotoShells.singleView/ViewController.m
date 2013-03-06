@@ -29,7 +29,8 @@
 -(IBAction)categorizeClicked:(id)sender
 {
     PictureManager *picManager = [[PictureManager alloc] init];
-    [picManager fetchPictures];
+    urlArray = [[NSMutableArray alloc] init];
+    urlArray = [picManager fetchPictures];
 }
 
 @end

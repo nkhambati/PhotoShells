@@ -11,6 +11,8 @@
 
 @interface ViewController : UIViewController
 {
+    NSMutableArray *urlArray;
+
     IBOutlet UIButton *getPics;
 }
 
