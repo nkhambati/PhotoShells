@@ -26,4 +26,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(IBAction)categorizeClicked:(id)sender
+{
+    PictureManager *picManager = [[PictureManager alloc] init];
+    [picManager fetchPictures];
+}
+
 @end
