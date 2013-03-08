@@ -708,6 +708,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoShells.singleView/PhotoShells.singleView-Prefix.pch";
 				INFOPLIST_FILE = "PhotoShells.singleView/PhotoShells.singleView-Info.plist";
@@ -724,6 +725,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoShells.singleView/PhotoShells.singleView-Prefix.pch";
 				INFOPLIST_FILE = "PhotoShells.singleView/PhotoShells.singleView-Info.plist";

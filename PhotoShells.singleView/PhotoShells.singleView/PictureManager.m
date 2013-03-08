@@ -23,6 +23,8 @@ static int count = 0;
     
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop)
     {
+        //NSLog(@"IN QUEUE2");
+
         if(result != nil)
         {
             if([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto])
@@ -44,6 +46,7 @@ static int count = 0;
                      if ([mtbA count]==count)
                      {
                          imgA=[[NSArray alloc] initWithArray:mtbA];
+                         //NSLog(@"imgArray: %@", imgA);
                      }
                      
                  }
@@ -54,6 +57,7 @@ static int count = 0;
     };
     
     NSMutableArray *groups = [[NSMutableArray alloc] init];
+    groups = [[NSMutableArray alloc] init];
     
     void (^ assetGroupEnumerator) ( ALAssetsGroup *, BOOL *)= ^(ALAssetsGroup *group, BOOL *stop)
     {
@@ -66,12 +70,17 @@ static int count = 0;
         }
 
     };
+
+    //dispatch_queue_t queue = dispatch_queue_create(nil, 0);
     
-    groups = [[NSMutableArray alloc] init];
+    //dispatch_sync(queue, ^{
+     //   NSLog(@"IN QUEUE2");
+        
+    [library enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:assetGroupEnumerator
+                              failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
     
-    [library enumerateGroupsWithTypes:ALAssetsGroupAll
-                           usingBlock:assetGroupEnumerator
-                         failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
+    NSLog(@"imgArray return: %@", imgA);
+    return;
     
 }
 

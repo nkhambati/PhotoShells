@@ -23,11 +23,12 @@
     picManager = [[PictureManager alloc] init];
     [picManager fetchPictures];
     [self runOCR];
-            
 }
 
 -(void)runOCR
 {
+    NSLog(@"IN runOCR");
+
     imgArray = [picManager getUIImage];
     OCR *ocr = [[OCR alloc] init];
     NSString *extractedText = [[NSString alloc] init];
