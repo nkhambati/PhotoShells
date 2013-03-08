@@ -35,4 +35,16 @@
     extractedText = [ocr extractText:imgArray];
 }
 
+- (IBAction)imageProcessing:(id)sender {
+}
+
+- (IBAction)folderSettings:(id)sender {
+}
+
+- (IBAction)categorisationLogs:(id)sender {
+}
+
+- (IBAction)appSwitch:(id)sender {
+}
+
 @end

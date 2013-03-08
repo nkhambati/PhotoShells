@@ -15,4 +15,11 @@
 -(IBAction)categorizeClicked:(id)sender;
 -(void)runOCR;
 
+//UI buttons - Vrinda
+- (IBAction)imageProcessing:(id)sender;
+- (IBAction)folderSettings:(id)sender;
+- (IBAction)categorisationLogs:(id)sender;
+- (IBAction)appSwitch:(id)sender;
+
+
 @end
