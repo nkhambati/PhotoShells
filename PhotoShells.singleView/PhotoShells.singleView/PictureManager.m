@@ -72,6 +72,8 @@ static int count = 0;
                            usingBlock:assetGroupEnumerator
                          failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
     
+    return urlA;
+    
 }
 
 
