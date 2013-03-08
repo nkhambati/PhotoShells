@@ -12,7 +12,7 @@ static int count = 0;
 
 @implementation PictureManager
 
--(NSMutableArray*)fetchPictures
+-(void)fetchPictures
 {
     // Initializing Variables
     imgA=[[NSArray alloc] init];
@@ -30,7 +30,7 @@ static int count = 0;
                 // NSLog(@"Result: %@",[result valueForProperty:ALAssetPropertyDate]);
                 
                 [urlDictionaries addObject:[result valueForProperty:ALAssetPropertyURLs]];
-                NSLog(@"Result: %@",[result valueForProperty:ALAssetPropertyURLs]);
+               // NSLog(@"Result: %@",[result valueForProperty:ALAssetPropertyURLs]);
                 
                 
                 NSURL *url= (NSURL*) [[result defaultRepresentation]url];
@@ -59,11 +59,12 @@ static int count = 0;
     {
         if(group != nil)
         {
-            NSLog(@"Group Name: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
+            //NSLog(@"Group Name: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
             [group enumerateAssetsUsingBlock:assetEnumerator];
             [groups addObject:group];
             count=[group numberOfAssets];
         }
+
     };
     
     groups = [[NSMutableArray alloc] init];
@@ -100,6 +101,17 @@ static int count = 0;
     [library enumerateGroupsWithTypes:ALAssetsGroupAll
                            usingBlock:assetGroupEnumerator
                          failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
+}
+
+-(NSArray*)getUIImage
+{
+    return imgA;
+}
+
+
+-(NSMutableArray*)getURLs
+{
+    return urlA;
 }
 
 

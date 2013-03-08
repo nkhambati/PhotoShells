@@ -20,9 +20,18 @@
 
 -(IBAction)categorizeClicked:(id)sender
 {
-    PictureManager *picManager = [[PictureManager alloc] init];
-    urlArray = [[NSMutableArray alloc] init];
-    urlArray = [picManager fetchPictures];
+    picManager = [[PictureManager alloc] init];
+    [picManager fetchPictures];
+    [self runOCR];
+            
+}
+
+-(void)runOCR
+{
+    imgArray = [picManager getUIImage];
+    OCR *ocr = [[OCR alloc] init];
+    NSString *extractedText = [[NSString alloc] init];
+    extractedText = [ocr extractText:imgArray];
 }
 
 @end
