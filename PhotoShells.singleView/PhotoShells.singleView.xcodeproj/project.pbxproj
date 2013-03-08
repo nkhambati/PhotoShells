@@ -18,12 +18,11 @@
 		2BC4920716E7DA7D00295C84 /* eng.traineddata in Resources */ = {isa = PBXBuildFile; fileRef = 2BC491FE16E7DA7D00295C84 /* eng.traineddata */; };
 		2BC4928716E7DBBB00295C84 /* Tesseract.mm in Sources */ = {isa = PBXBuildFile; fileRef = 2BC4928416E7DBBB00295C84 /* Tesseract.mm */; };
 		2BC4928816E7DBBB00295C84 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 2BC4928516E7DBBB00295C84 /* LICENSE */; };
-		2BC4928916E7DBBB00295C84 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2BC4928616E7DBBB00295C84 /* README.md */; };
 		2BC492F716E7DC9E00295C84 /* liblept.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC492F516E7DC9E00295C84 /* liblept.a */; };
 		2BC492F816E7DC9E00295C84 /* libtesseract_all.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BC492F616E7DC9E00295C84 /* libtesseract_all.a */; };
-		2BC492FA16E7DCAE00295C84 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2BC492F916E7DCAE00295C84 /* README.md */; };
 		85EBDA6B16E7C5C800674177 /* PictureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 85EBDA6A16E7C5C800674177 /* PictureManager.m */; };
 		85EBDA6E16E7CA4100674177 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85EBDA6D16E7CA4100674177 /* AssetsLibrary.framework */; };
+		85EBDA7E16E7E05300674177 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 2BC4928616E7DBBB00295C84 /* README.md */; };
 		B2E30A9016B07CAA002C9E32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E30A8F16B07CAA002C9E32 /* UIKit.framework */; };
 		B2E30A9216B07CAA002C9E32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E30A9116B07CAA002C9E32 /* Foundation.framework */; };
 		B2E30A9416B07CAA002C9E32 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E30A9316B07CAA002C9E32 /* CoreGraphics.framework */; };
@@ -556,6 +555,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85EBDA7E16E7E05300674177 /* README.md in Resources */,
 				B2E30A9A16B07CAA002C9E32 /* InfoPlist.strings in Resources */,
 				B2E30AA216B07CAA002C9E32 /* Default.png in Resources */,
 				B2E30AA416B07CAA002C9E32 /* Default@2x.png in Resources */,
@@ -571,8 +571,6 @@
 				2BC4920616E7DA7D00295C84 /* eng.tesseract_cube.nn in Resources */,
 				2BC4920716E7DA7D00295C84 /* eng.traineddata in Resources */,
 				2BC4928816E7DBBB00295C84 /* LICENSE in Resources */,
-				2BC4928916E7DBBB00295C84 /* README.md in Resources */,
-				2BC492FA16E7DCAE00295C84 /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
