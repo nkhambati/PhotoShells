@@ -18,6 +18,8 @@
     NSMutableArray *urlA;
 }
 
--(NSMutableArray*)fetchPictures;
+-(void)fetchPictures;
 -(void)CopyPictureToAlbum:(NSURL *)url Location: (NSString *)album;
+-(NSArray*)getUIImage;
+-(NSMutableArray*)getURLs;
 @end

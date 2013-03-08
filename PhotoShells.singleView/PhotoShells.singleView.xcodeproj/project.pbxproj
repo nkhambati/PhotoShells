@@ -23,6 +23,8 @@
 		8542CB9F16E9AB8E0013701E /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8542CB9116E9AB8E0013701E /* README.md */; };
 		8542CBA116E9ABA40013701E /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 8542CBA016E9ABA40013701E /* tessdata */; };
 		8542CBA216E9ABA40013701E /* tessdata in Resources */ = {isa = PBXBuildFile; fileRef = 8542CBA016E9ABA40013701E /* tessdata */; };
+		8542CDCD16E9BD920013701E /* OCR.m in Sources */ = {isa = PBXBuildFile; fileRef = 8542CDCC16E9BD920013701E /* OCR.m */; };
+		8542CDCE16E9BD920013701E /* OCR.m in Sources */ = {isa = PBXBuildFile; fileRef = 8542CDCC16E9BD920013701E /* OCR.m */; };
 		85EBDA6B16E7C5C800674177 /* PictureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 85EBDA6A16E7C5C800674177 /* PictureManager.m */; };
 		85EBDA6E16E7CA4100674177 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 85EBDA6D16E7CA4100674177 /* AssetsLibrary.framework */; };
 		B2E30A9016B07CAA002C9E32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2E30A8F16B07CAA002C9E32 /* UIKit.framework */; };
@@ -164,6 +166,8 @@
 		8542CB9016E9AB8E0013701E /* libtesseract_all.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libtesseract_all.a; sourceTree = "<group>"; };
 		8542CB9116E9AB8E0013701E /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		8542CBA016E9ABA40013701E /* tessdata */ = {isa = PBXFileReference; lastKnownFileType = folder; name = tessdata; path = PhotoShells.singleView/tessdata; sourceTree = "<group>"; };
+		8542CDCB16E9BD920013701E /* OCR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCR.h; sourceTree = "<group>"; };
+		8542CDCC16E9BD920013701E /* OCR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCR.m; sourceTree = "<group>"; };
 		85EBDA6916E7C5C800674177 /* PictureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PictureManager.h; sourceTree = "<group>"; };
 		85EBDA6A16E7C5C800674177 /* PictureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PictureManager.m; sourceTree = "<group>"; };
 		85EBDA6D16E7CA4100674177 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
@@ -425,6 +429,8 @@
 			children = (
 				B2E30A9E16B07CAA002C9E32 /* AppDelegate.h */,
 				B2E30A9F16B07CAA002C9E32 /* AppDelegate.m */,
+				8542CDCB16E9BD920013701E /* OCR.h */,
+				8542CDCC16E9BD920013701E /* OCR.m */,
 				B2E30AA716B07CAA002C9E32 /* MainStoryboard.storyboard */,
 				B2E30AAA16B07CAA002C9E32 /* ViewController.h */,
 				B2E30AAB16B07CAA002C9E32 /* ViewController.m */,
@@ -594,6 +600,7 @@
 				B2E30AAC16B07CAA002C9E32 /* ViewController.m in Sources */,
 				85EBDA6B16E7C5C800674177 /* PictureManager.m in Sources */,
 				8542CB9216E9AB8E0013701E /* Tesseract.mm in Sources */,
+				8542CDCD16E9BD920013701E /* OCR.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -603,6 +610,7 @@
 			files = (
 				B2E30AC116B07CAA002C9E32 /* PhotoShells_singleViewTests.m in Sources */,
 				8542CB9316E9AB8E0013701E /* Tesseract.mm in Sources */,
+				8542CDCE16E9BD920013701E /* OCR.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
