@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C3012" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="UiV-OU-sHh">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="11G63" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="UiV-OU-sHh">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
     </dependencies>
@@ -84,11 +84,24 @@
                                     <segue destination="Ae5-pf-dr7" kind="push" id="Mfb-8c-ybd"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gwa-1F-r7V">
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="Categorize">
+                                    <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="highlighted">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="categorizeClicked:" destination="XfF-UT-UHp" eventType="touchUpInside" id="A5D-hl-ChW"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="YXg-CS-eaE" firstAttribute="trailing" secondItem="QFK-Vl-rEu" secondAttribute="trailing" type="default" id="0Kk-iN-FwJ"/>
-                            <constraint firstItem="77n-5y-mZv" firstAttribute="leading" secondItem="zkT-Ov-C0y" secondAttribute="leading" constant="79" id="1DR-cS-0da"/>
+                            <constraint firstItem="77n-5y-mZv" firstAttribute="leading" secondItem="zkT-Ov-C0y" secondAttribute="leading" constant="93" id="0fb-uT-cuw"/>
                             <constraint firstItem="77n-5y-mZv" firstAttribute="top" secondItem="zkT-Ov-C0y" secondAttribute="top" constant="176" id="1vd-1h-WID"/>
                             <constraint firstItem="YXg-CS-eaE" firstAttribute="leading" secondItem="MxW-Xr-66d" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="8hE-AG-vpO"/>
                             <constraint firstItem="MxW-Xr-66d" firstAttribute="top" secondItem="zkT-Ov-C0y" secondAttribute="top" constant="39" id="ASh-oZ-1df"/>
@@ -102,9 +115,11 @@
                             <constraint firstItem="QFK-Vl-rEu" firstAttribute="top" secondItem="zkT-Ov-C0y" secondAttribute="top" constant="75" id="Xss-td-BHl"/>
                             <constraint firstAttribute="bottom" secondItem="YEZ-az-B4t" secondAttribute="bottom" constant="54" id="Yzk-Hp-LDk"/>
                             <constraint firstItem="Mup-h7-Kre" firstAttribute="trailing" secondItem="AKS-Mk-bzo" secondAttribute="trailing" type="default" id="dKc-fa-L0n"/>
+                            <constraint firstItem="Gwa-1F-r7V" firstAttribute="top" secondItem="zkT-Ov-C0y" secondAttribute="top" type="default" id="epe-1L-E4j"/>
                             <constraint firstItem="YEZ-az-B4t" firstAttribute="top" secondItem="AKS-Mk-bzo" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="oC0-Wa-QhZ"/>
                             <constraint firstItem="YEZ-az-B4t" firstAttribute="leading" secondItem="77n-5y-mZv" secondAttribute="leading" type="default" id="qs9-3X-OLX"/>
                             <constraint firstItem="MxW-Xr-66d" firstAttribute="leading" secondItem="zkT-Ov-C0y" secondAttribute="leading" constant="60" id="rkS-C2-Q1P"/>
+                            <constraint firstItem="Gwa-1F-r7V" firstAttribute="trailing" secondItem="zkT-Ov-C0y" secondAttribute="trailing" type="default" id="w1b-5U-m3c"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="jB8-Ow-0EO"/>
