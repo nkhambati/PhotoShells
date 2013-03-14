@@ -23,6 +23,7 @@ static int count = 0;
     
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop)
     {
+        NSLog(@"in asset Enum");
         if(result != nil)
         {
             if([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto])
@@ -57,6 +58,7 @@ static int count = 0;
     
     void (^ assetGroupEnumerator) ( ALAssetsGroup *, BOOL *)= ^(ALAssetsGroup *group, BOOL *stop)
     {
+        NSLog(@"in asset Group Enum");
         if(group != nil)
         {
             //NSLog(@"Group Name: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
@@ -105,6 +107,7 @@ static int count = 0;
 
 -(NSArray*)getUIImage
 {
+    NSLog(@"in UI Image");
     return imgA;
 }
 

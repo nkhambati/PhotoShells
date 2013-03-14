@@ -12,6 +12,7 @@
 
 - (NSString *)extractText:(NSArray *)imgArray
 {
+    NSLog(@"in OCR extract text");
     if(!imgArray || ![imgArray count])
     { NSLog(@"Array is empty");}
     

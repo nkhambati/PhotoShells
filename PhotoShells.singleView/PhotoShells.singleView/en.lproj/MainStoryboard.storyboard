@@ -87,7 +87,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="categorizeClicked:" destination="2" eventType="touchUpInside" id="8ow-Cp-vw9"/>
+                                    <action selector="categorizeClicked:" destination="2" eventType="touchUpInside" id="q6V-Nq-Nfc"/>
                                 </connections>
                             </button>
                         </subviews>
