@@ -53,7 +53,7 @@
                                 </state>
                                 <connections>
                                     <action selector="imageProcessing:" destination="XfF-UT-UHp" eventType="touchUpInside" id="F29-zr-5Al"/>
-                                    <segue destination="aef-x2-pj8" kind="push" identifier="Modal1" id="AXk-qR-z45"/>
+                                    <segue destination="aef-x2-pj8" kind="push" id="ahn-mK-WRz"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AKS-Mk-bzo">
@@ -109,13 +109,13 @@
                             <constraint firstItem="AKS-Mk-bzo" firstAttribute="leading" secondItem="Mup-h7-Kre" secondAttribute="leading" type="default" id="EVV-oX-JUp"/>
                             <constraint firstItem="AKS-Mk-bzo" firstAttribute="top" secondItem="Mup-h7-Kre" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="EZN-ny-Lez"/>
                             <constraint firstItem="YXg-CS-eaE" firstAttribute="top" secondItem="zkT-Ov-C0y" secondAttribute="top" constant="60" id="HDT-Xe-s8y"/>
+                            <constraint firstItem="Gwa-1F-r7V" firstAttribute="top" secondItem="zkT-Ov-C0y" secondAttribute="top" constant="-1" id="J39-Cw-ild"/>
                             <constraint firstItem="9jj-2J-LWQ" firstAttribute="top" secondItem="zkT-Ov-C0y" secondAttribute="top" constant="174" id="NHf-Ww-qOo"/>
                             <constraint firstItem="9jj-2J-LWQ" firstAttribute="trailing" secondItem="YEZ-az-B4t" secondAttribute="trailing" type="default" id="Qbc-Bc-MvR"/>
                             <constraint firstItem="QFK-Vl-rEu" firstAttribute="leading" secondItem="MxW-Xr-66d" secondAttribute="trailing" constant="8" symbolic="YES" type="default" id="U1I-dK-lqp"/>
                             <constraint firstItem="QFK-Vl-rEu" firstAttribute="top" secondItem="zkT-Ov-C0y" secondAttribute="top" constant="75" id="Xss-td-BHl"/>
                             <constraint firstAttribute="bottom" secondItem="YEZ-az-B4t" secondAttribute="bottom" constant="54" id="Yzk-Hp-LDk"/>
                             <constraint firstItem="Mup-h7-Kre" firstAttribute="trailing" secondItem="AKS-Mk-bzo" secondAttribute="trailing" type="default" id="dKc-fa-L0n"/>
-                            <constraint firstItem="Gwa-1F-r7V" firstAttribute="top" secondItem="zkT-Ov-C0y" secondAttribute="top" type="default" id="epe-1L-E4j"/>
                             <constraint firstItem="YEZ-az-B4t" firstAttribute="top" secondItem="AKS-Mk-bzo" secondAttribute="bottom" constant="8" symbolic="YES" type="default" id="oC0-Wa-QhZ"/>
                             <constraint firstItem="YEZ-az-B4t" firstAttribute="leading" secondItem="77n-5y-mZv" secondAttribute="leading" type="default" id="qs9-3X-OLX"/>
                             <constraint firstItem="MxW-Xr-66d" firstAttribute="leading" secondItem="zkT-Ov-C0y" secondAttribute="leading" constant="60" id="rkS-C2-Q1P"/>
@@ -282,16 +282,24 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Image Processing Settings" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMV-O1-p0N">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Categorize My Pictures..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NMV-O1-p0N">
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XrX-ff-O5t">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="216" id="pD5-xA-gV5"/>
+                                    <constraint firstAttribute="width" constant="240" id="zgz-Jz-Rmm"/>
+                                </constraints>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="NMV-O1-p0N" firstAttribute="top" secondItem="lBM-5f-o6u" secondAttribute="top" constant="28" id="AcQ-7J-oOV"/>
-                            <constraint firstItem="NMV-O1-p0N" firstAttribute="leading" secondItem="lBM-5f-o6u" secondAttribute="leading" constant="69" id="SGd-vg-lpp"/>
+                            <constraint firstItem="XrX-ff-O5t" firstAttribute="top" secondItem="lBM-5f-o6u" secondAttribute="top" constant="105" id="Km4-Wb-RAQ"/>
+                            <constraint firstItem="NMV-O1-p0N" firstAttribute="top" secondItem="lBM-5f-o6u" secondAttribute="top" constant="20" symbolic="YES" type="default" id="m2T-mf-Hf2"/>
+                            <constraint firstItem="XrX-ff-O5t" firstAttribute="centerX" secondItem="lBM-5f-o6u" secondAttribute="centerX" type="default" id="m2e-fd-JKs"/>
+                            <constraint firstItem="XrX-ff-O5t" firstAttribute="centerX" secondItem="NMV-O1-p0N" secondAttribute="centerX" type="default" id="qNw-Gf-zcI"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="bjo-Uf-hC8"/>
@@ -316,6 +324,7 @@
                 <relationship kind="action" name="categorizeClicked:"/>
                 <relationship kind="action" name="folderSettings:"/>
                 <relationship kind="action" name="imageProcessing:"/>
+                <relationship kind="action" name="selected"/>
                 <relationship kind="outlet" name="getPics" candidateClass="UIButton"/>
             </relationships>
         </class>

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #include <AssetsLibrary/AssetsLibrary.h> 
+#import "OCR.h"
 
 @interface PictureManager : NSObject
 {

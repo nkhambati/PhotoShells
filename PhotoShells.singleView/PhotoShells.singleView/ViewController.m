@@ -6,6 +6,7 @@
 
 @implementation ViewController
 
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -22,17 +23,6 @@
 {
     picManager = [[PictureManager alloc] init];
     [picManager fetchPictures];
-    [self runOCR];
-}
-
--(void)runOCR
-{
-    NSLog(@"IN runOCR");
-
-    imgArray = [picManager getUIImage];
-    OCR *ocr = [[OCR alloc] init];
-    NSString *extractedText = [[NSString alloc] init];
-    extractedText = [ocr extractText:imgArray];
 }
 
 - (IBAction)imageProcessing:(id)sender {
@@ -44,7 +34,14 @@
 - (IBAction)categorisationLogs:(id)sender {
 }
 
-- (IBAction)appSwitch:(id)sender {
+- (IBAction)appSwitch:(id)sender
+{
+    // Once app is turned on, sets to default settings.
+    
+    // Categorization frequency is set to daily
+    catSettings = [[CategorizationSettings alloc] init];
+    [catSettings setSeconds:(24)];
 }
 
 @end
+

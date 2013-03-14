@@ -12,7 +12,6 @@ static int count = 0;
 
 @implementation PictureManager
 
-//- (void)loadImages:(NSArray *)imageUrls loadedImages:(NSArray *)loadedImages callback:(void(^)(NSArray *))callback
 -(void)fetchPictures
 {
     // Initializing Variables
@@ -22,27 +21,17 @@ static int count = 0;
     library = [[ALAssetsLibrary alloc] init];
     urlA = [[NSMutableArray alloc] init];
     
-    //if (imgA == nil || [imgA count] == 0) {
-   //     callback(fetchedPictures);
-   // }
-    
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop)
     {
-        //NSLog(@"IN QUEUE2");
 
         if(result != nil)
         {
             if([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto])
-            {
-                // NSLog(@"Result: %@",[result valueForProperty:ALAssetPropertyDate]);
-                
+            {                
                 [urlDictionaries addObject:[result valueForProperty:ALAssetPropertyURLs]];
-               // NSLog(@"Result: %@",[result valueForProperty:ALAssetPropertyURLs]);
-                
                 
                 NSURL *url= (NSURL*) [[result defaultRepresentation]url];
                 [urlA addObject:url];
-                // NSLog(@"URL: %@",url);
                 
                 [library assetForURL:url resultBlock:^(ALAsset *asset)
                  {
@@ -51,7 +40,11 @@ static int count = 0;
                      if ([mtbA count]==count)
                      {
                          imgA=[[NSArray alloc] initWithArray:mtbA];
-                         NSLog(@"imgArray: %@", imgA);
+                         
+                         // Running OCR
+                         OCR *ocr = [[OCR alloc] init];
+                         NSString *extractedText = [[NSString alloc] init];
+                         extractedText = [ocr extractText:imgA];
                      }
                      
                  }
@@ -76,20 +69,9 @@ static int count = 0;
 
     };
 
-    //operationQueue = [[NSOperationQueue alloc] init];
-
-    //NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
     [library enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:assetGroupEnumerator
                               failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
-   // }];
-        
-    //NSBlockOperation *operation2 = [NSBlockOperation blockOperationWithBlock:^{
-        NSLog(@"imgArray return: %@", imgA);
-        return;
-   // }];
-    
-    //[operationQueue addOperation:operation];
-    //[operationQueue addOperation:operation2];
+    return;
 }
 
 
@@ -102,8 +84,6 @@ static int count = 0;
     {
         if([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:album])
         {
-            // NSLog(@"Group Name: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
-            
             [library assetForURL:url resultBlock:^(ALAsset *asset)
              {
                  if(asset != nil)
