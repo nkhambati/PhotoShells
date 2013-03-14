@@ -10,12 +10,12 @@
 
 @implementation CategorizationSettings
 
--(void)setSeconds:(NSInteger)sec
+-(void)setSeconds:(double)hours
 {
-    seconds = (sec * 3600);
+    seconds = (hours * 3600);
 }
 
--(NSInteger)getSeconds
+-(double)getSeconds
 {
     return seconds;
 }

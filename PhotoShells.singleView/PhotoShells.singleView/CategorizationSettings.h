@@ -10,9 +10,9 @@
 
 @interface CategorizationSettings : NSObject
 {
-    NSInteger seconds;
+    double seconds;
 }
--(void)setSeconds:(NSInteger)sec;
--(NSInteger)getSeconds;
+-(void)setSeconds:(double)hours;
+-(double)getSeconds;
 
 @end

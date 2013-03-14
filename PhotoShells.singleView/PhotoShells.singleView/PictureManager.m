@@ -45,6 +45,8 @@ static int count = 0;
                          OCR *ocr = [[OCR alloc] init];
                          NSString *extractedText = [[NSString alloc] init];
                          extractedText = [ocr extractText:imgA];
+                         NSLog(@"FETCHING!");
+
                      }
                      
                  }

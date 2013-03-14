@@ -34,13 +34,34 @@
 - (IBAction)categorisationLogs:(id)sender {
 }
 
-- (IBAction)appSwitch:(id)sender
+- (IBAction)appSwitch:(UISwitch *)sender
 {
-    // Once app is turned on, sets to default settings.
+    if([sender isOn])
+    {
+        // Once app is turned on, sets to default settings.
     
-    // Categorization frequency is set to daily
-    catSettings = [[CategorizationSettings alloc] init];
-    [catSettings setSeconds:(24)];
+        // Categorization frequency is set to daily
+        catSettings = [[CategorizationSettings alloc] init];
+        [catSettings setSeconds:(24)];
+    
+        // Timer is scheduled to run 'fetchPictures' at the specified interval
+        timer = [NSTimer scheduledTimerWithTimeInterval:5.0
+                                                    target:self
+                                                    selector:@selector(runFetchPictures)
+                                                    userInfo:nil repeats:YES];
+    }
+    else
+    {
+        // Stopping timer. Pictures will no longer be fetched.
+        [timer invalidate];
+    }
+
+}
+
+-(void)runFetchPictures
+{
+    picManager = [[PictureManager alloc] init];
+    [picManager fetchPictures];
 }
 
 @end

@@ -8,6 +8,7 @@
     NSArray *imgArray;
     PictureManager *picManager;
     CategorizationSettings *catSettings;
+    NSTimer *timer;
     
     IBOutlet UIButton *getPics;
 }
@@ -18,7 +19,7 @@
 - (IBAction)imageProcessing:(id)sender;
 - (IBAction)folderSettings:(id)sender;
 - (IBAction)categorisationLogs:(id)sender;
-- (IBAction)appSwitch:(id)sender;
+- (IBAction)appSwitch:(UISwitch *)sender;
 
 //Image Categorization
 -(IBAction)selected;
