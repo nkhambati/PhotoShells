@@ -16,6 +16,7 @@
     NSMutableArray *mtbA;
     NSFileManager *manager;
     NSMutableArray *urlA;
+    //NSOperationQueue *operationQueue;
 }
 
 -(void)fetchPictures;

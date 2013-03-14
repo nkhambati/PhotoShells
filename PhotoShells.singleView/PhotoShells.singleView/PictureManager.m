@@ -12,6 +12,7 @@ static int count = 0;
 
 @implementation PictureManager
 
+//- (void)loadImages:(NSArray *)imageUrls loadedImages:(NSArray *)loadedImages callback:(void(^)(NSArray *))callback
 -(void)fetchPictures
 {
     // Initializing Variables
@@ -20,6 +21,10 @@ static int count = 0;
     NSMutableArray* urlDictionaries = [[NSMutableArray alloc] init];
     library = [[ALAssetsLibrary alloc] init];
     urlA = [[NSMutableArray alloc] init];
+    
+    //if (imgA == nil || [imgA count] == 0) {
+   //     callback(fetchedPictures);
+   // }
     
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop)
     {
@@ -46,7 +51,7 @@ static int count = 0;
                      if ([mtbA count]==count)
                      {
                          imgA=[[NSArray alloc] initWithArray:mtbA];
-                         //NSLog(@"imgArray: %@", imgA);
+                         NSLog(@"imgArray: %@", imgA);
                      }
                      
                  }
@@ -71,17 +76,20 @@ static int count = 0;
 
     };
 
-    //dispatch_queue_t queue = dispatch_queue_create(nil, 0);
-    
-    //dispatch_sync(queue, ^{
-     //   NSLog(@"IN QUEUE2");
-        
+    //operationQueue = [[NSOperationQueue alloc] init];
+
+    //NSBlockOperation *operation = [NSBlockOperation blockOperationWithBlock:^{
     [library enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:assetGroupEnumerator
                               failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
+   // }];
+        
+    //NSBlockOperation *operation2 = [NSBlockOperation blockOperationWithBlock:^{
+        NSLog(@"imgArray return: %@", imgA);
+        return;
+   // }];
     
-    NSLog(@"imgArray return: %@", imgA);
-    return;
-    
+    //[operationQueue addOperation:operation];
+    //[operationQueue addOperation:operation2];
 }
 
 
