@@ -27,16 +27,11 @@ static int count = 0;
         if(result != nil)
         {
             if([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto])
-            {
-                // NSLog(@"Result: %@",[result valueForProperty:ALAssetPropertyDate]);
-                
+            {                
                 [urlDictionaries addObject:[result valueForProperty:ALAssetPropertyURLs]];
-               // NSLog(@"Result: %@",[result valueForProperty:ALAssetPropertyURLs]);
-                
                 
                 NSURL *url= (NSURL*) [[result defaultRepresentation]url];
                 [urlA addObject:url];
-                // NSLog(@"URL: %@",url);
                 
                 [library assetForURL:url resultBlock:^(ALAsset *asset)
                  {
@@ -45,6 +40,11 @@ static int count = 0;
                      if ([mtbA count]==count)
                      {
                          imgA=[[NSArray alloc] initWithArray:mtbA];
+                         
+                         // Running OCR
+                         OCR *ocr = [[OCR alloc] init];
+                         NSString *extractedText = [[NSString alloc] init];
+                         extractedText = [ocr extractText:imgA];
                      }
                      
                  }
@@ -55,6 +55,7 @@ static int count = 0;
     };
     
     NSMutableArray *groups = [[NSMutableArray alloc] init];
+    groups = [[NSMutableArray alloc] init];
     
     void (^ assetGroupEnumerator) ( ALAssetsGroup *, BOOL *)= ^(ALAssetsGroup *group, BOOL *stop)
     {
@@ -68,13 +69,10 @@ static int count = 0;
         }
 
     };
-    
-    groups = [[NSMutableArray alloc] init];
-    
-    [library enumerateGroupsWithTypes:ALAssetsGroupAll
-                           usingBlock:assetGroupEnumerator
-                         failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
-    
+
+    [library enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:assetGroupEnumerator
+                              failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
+    return;
 }
 
 
@@ -87,8 +85,6 @@ static int count = 0;
     {
         if([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:album])
         {
-            // NSLog(@"Group Name: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
-            
             [library assetForURL:url resultBlock:^(ALAsset *asset)
              {
                  if(asset != nil)

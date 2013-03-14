@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8542CDCD16E9BD920013701E /* OCR.m in Sources */ = {isa = PBXBuildFile; fileRef = 8542CDCC16E9BD920013701E /* OCR.m */; };
 		8542CDCE16E9BD920013701E /* OCR.m in Sources */ = {isa = PBXBuildFile; fileRef = 8542CDCC16E9BD920013701E /* OCR.m */; };
+		854B261916F1982D00AE4CDB /* CategorizationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 854B261816F1982D00AE4CDB /* CategorizationSettings.m */; };
+		854B261A16F1982D00AE4CDB /* CategorizationSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 854B261816F1982D00AE4CDB /* CategorizationSettings.m */; };
 		85873B6616EA39B300D13573 /* Tesseract.mm in Sources */ = {isa = PBXBuildFile; fileRef = 85873AF616EA39B300D13573 /* Tesseract.mm */; };
 		85873B6716EA39B300D13573 /* Tesseract.mm in Sources */ = {isa = PBXBuildFile; fileRef = 85873AF616EA39B300D13573 /* Tesseract.mm */; };
 		85873B6816EA39B300D13573 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 85873AF716EA39B300D13573 /* LICENSE */; };
@@ -60,6 +62,8 @@
 /* Begin PBXFileReference section */
 		8542CDCB16E9BD920013701E /* OCR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCR.h; sourceTree = "<group>"; };
 		8542CDCC16E9BD920013701E /* OCR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCR.m; sourceTree = "<group>"; };
+		854B261716F1982D00AE4CDB /* CategorizationSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CategorizationSettings.h; sourceTree = "<group>"; };
+		854B261816F1982D00AE4CDB /* CategorizationSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CategorizationSettings.m; sourceTree = "<group>"; };
 		85873AF516EA39B300D13573 /* Tesseract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tesseract.h; sourceTree = "<group>"; };
 		85873AF616EA39B300D13573 /* Tesseract.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Tesseract.mm; sourceTree = "<group>"; };
 		85873AF716EA39B300D13573 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
@@ -436,6 +440,8 @@
 				B2E30AAB16B07CAA002C9E32 /* ViewController.m */,
 				85EBDA6916E7C5C800674177 /* PictureManager.h */,
 				85EBDA6A16E7C5C800674177 /* PictureManager.m */,
+				854B261716F1982D00AE4CDB /* CategorizationSettings.h */,
+				854B261816F1982D00AE4CDB /* CategorizationSettings.m */,
 				B2E30A9616B07CAA002C9E32 /* Supporting Files */,
 			);
 			path = PhotoShells.singleView;
@@ -603,6 +609,7 @@
 				85EBDA6B16E7C5C800674177 /* PictureManager.m in Sources */,
 				8542CDCD16E9BD920013701E /* OCR.m in Sources */,
 				85873B6616EA39B300D13573 /* Tesseract.mm in Sources */,
+				854B261916F1982D00AE4CDB /* CategorizationSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -613,6 +620,7 @@
 				B2E30AC116B07CAA002C9E32 /* PhotoShells_singleViewTests.m in Sources */,
 				8542CDCE16E9BD920013701E /* OCR.m in Sources */,
 				85873B6716EA39B300D13573 /* Tesseract.mm in Sources */,
+				854B261A16F1982D00AE4CDB /* CategorizationSettings.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,6 +716,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoShells.singleView/PhotoShells.singleView-Prefix.pch";
 				INFOPLIST_FILE = "PhotoShells.singleView/PhotoShells.singleView-Info.plist";
@@ -724,6 +733,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_CXX_LIBRARY = "compiler-default";
+				CLANG_WARN_OBJCPP_ARC_ABI = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PhotoShells.singleView/PhotoShells.singleView-Prefix.pch";
 				INFOPLIST_FILE = "PhotoShells.singleView/PhotoShells.singleView-Info.plist";

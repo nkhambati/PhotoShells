@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #include <AssetsLibrary/AssetsLibrary.h> 
+#import "OCR.h"
 
 @interface PictureManager : NSObject
 {
@@ -16,6 +17,7 @@
     NSMutableArray *mtbA;
     NSFileManager *manager;
     NSMutableArray *urlA;
+    //NSOperationQueue *operationQueue;
 }
 
 -(void)fetchPictures;
