@@ -27,10 +27,10 @@
             [tesseract setImage:image];
             [tesseract recognize];
 
-        }
-    
-        return @"Blah";
+        }    
     }
+    
+    return @"Blah";
 }
 
 @end
