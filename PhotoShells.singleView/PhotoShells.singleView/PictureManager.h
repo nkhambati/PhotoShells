@@ -17,10 +17,10 @@
     NSMutableArray *mtbA;
     NSFileManager *manager;
     NSMutableArray *urlA;
-    //NSOperationQueue *operationQueue;
+    NSString *lastUpdateDate;
 }
 
--(void)fetchPictures;
+-(void)fetchPictures:(NSString *)specifiedDate;
 -(void)CopyPictureToAlbum:(NSURL *)url Location: (NSString *)album;
 -(NSArray*)getUIImage;
 -(NSMutableArray*)getURLs;

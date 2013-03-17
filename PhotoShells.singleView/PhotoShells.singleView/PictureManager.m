@@ -9,10 +9,11 @@
 #import "PictureManager.h"
 
 static int count = 0;
+static int imagesFound = 0;
 
 @implementation PictureManager
 
--(void)fetchPictures
+-(void)fetchPictures:(NSString *)specifiedDate
 {
     // Initializing Variables
     imgA=[[NSArray alloc] init];
@@ -35,18 +36,44 @@ static int count = 0;
                 
                 [library assetForURL:url resultBlock:^(ALAsset *asset)
                  {
-                     [mtbA addObject:[UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]];
+                     imagesFound++;
+
+                     // Finding date of pictures taken
+                     NSDate *dateTaken = [asset valueForProperty:(ALAssetPropertyDate)];
+                     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+                     [dateFormat setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
+                     NSString *date = [dateFormat stringFromDate:(dateTaken)];
+                     NSComparisonResult result = [date compare:specifiedDate];
+                    
+                     if(result > 0) //Pictures after the specified date
+                     {
+                         [mtbA addObject:[UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]];
+                     }
                      
-                     if ([mtbA count]==count)
+                     if (imagesFound==count)
                      {
                          imgA=[[NSArray alloc] initWithArray:mtbA];
+                         NSLog(@"imgA: %@", imgA);
                          
-                         // Running OCR
-                         OCR *ocr = [[OCR alloc] init];
-                         NSString *extractedText = [[NSString alloc] init];
-                         extractedText = [ocr extractText:imgA];
-                         NSLog(@"FETCHING!");
-
+                         //Get Current Date to update lastUpdateDate for future fetches
+                         NSDate *dateObject = [[NSDate alloc] init];
+                         dateObject = [NSDate date];
+                         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                         [dateFormatter setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
+                         lastUpdateDate = [dateFormatter stringFromDate:(dateObject)];
+                         NSLog(@"LastUpdateDate: %@", lastUpdateDate);
+                         
+                         if(!imgA || ![imgA count])
+                         {
+                             return;
+                         }
+                         else
+                         {
+                             // Running OCR
+                             OCR *ocr = [[OCR alloc] init];
+                             NSString *extractedText = [[NSString alloc] init];
+                             extractedText = [ocr extractText:imgA];
+                         }
                      }
                      
                  }

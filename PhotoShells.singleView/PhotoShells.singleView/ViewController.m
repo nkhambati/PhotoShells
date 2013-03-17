@@ -22,7 +22,7 @@
 -(IBAction)categorizeClicked:(id)sender
 {
     picManager = [[PictureManager alloc] init];
-    [picManager fetchPictures];
+    [picManager fetchPictures:@"2013-02-06 00-00-00"];
 }
 
 - (IBAction)imageProcessing:(id)sender {
@@ -45,7 +45,7 @@
         [catSettings setSeconds:(24)];
     
         // Timer is scheduled to run 'fetchPictures' at the specified interval
-        timer = [NSTimer scheduledTimerWithTimeInterval:5.0
+        timer = [NSTimer scheduledTimerWithTimeInterval:10.0
                                                     target:self
                                                     selector:@selector(runFetchPictures)
                                                     userInfo:nil repeats:YES];
@@ -61,7 +61,7 @@
 -(void)runFetchPictures
 {
     picManager = [[PictureManager alloc] init];
-    [picManager fetchPictures];
+    [picManager fetchPictures:@"2013-02-06 00-00-00"];
 }
 
 @end
