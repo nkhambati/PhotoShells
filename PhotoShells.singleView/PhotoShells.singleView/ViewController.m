@@ -6,7 +6,7 @@
 
 @implementation ViewController
 
-
+@synthesize getPics = _getPicks;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
