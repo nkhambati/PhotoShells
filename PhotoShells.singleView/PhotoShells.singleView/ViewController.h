@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "PictureManager.h"
 #import "OCR.h"
 #import "CategorizationSettings.h"
@@ -21,9 +22,6 @@
 - (IBAction)folderSettings:(id)sender;
 - (IBAction)categorisationLogs:(id)sender;
 - (IBAction)appSwitch:(UISwitch *)sender;
-
-//Image Categorization
--(IBAction)selected;
 
 
 -(IBAction)categorizeClicked:(id)sender;

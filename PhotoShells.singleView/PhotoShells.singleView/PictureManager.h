@@ -18,7 +18,7 @@
     NSMutableArray *mtbA;
     NSFileManager *manager;
     NSMutableArray *urlA;
-    NSString *lastUpdateDate;
+    NSDate *lastUpdateDate;
     NSTimer *timer;
 }
 

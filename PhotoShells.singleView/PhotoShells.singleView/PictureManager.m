@@ -8,8 +8,9 @@
 
 #import "PictureManager.h"
 
-static int count = 0;
+NSInteger count[2];
 static int imagesFound = 0;
+static int groupsChecked = 0;
 
 @implementation PictureManager
 static PictureManager* _sharedPicManager = nil;
@@ -77,33 +78,41 @@ static PictureManager* _sharedPicManager = nil;
                      if(!lastUpdateDate)
                      {
                          // TO DO: Change this value.
-                         lastUpdateDate = @"2013-02-06 00-00-00";
+                         lastUpdateDate = [[NSDate alloc] init];
+                         NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                         [df setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+                         lastUpdateDate = [df dateFromString: @"2013-02-06 00:00:00"];
+
                      }
                      
                      // Finding date of pictures taken
                      NSDate *dateTaken = [asset valueForProperty:(ALAssetPropertyDate)];
-                     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-                     [dateFormat setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
-                     NSString *date = [dateFormat stringFromDate:(dateTaken)];
-                     NSComparisonResult result = [date compare:lastUpdateDate];
+                     NSComparisonResult comparisonResult = [dateTaken compare:lastUpdateDate];
                      
-                     if(result > 0) //Pictures after the specified date
+                     //TO DO: Delete Commenting
+                     //NSLog(@"lastUpdateDate: %@", lastUpdateDate);
+                     //NSLog(@"UIImage: %@", [UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]);
+                     //NSLog(@"Date: %@", [result valueForProperty:ALAssetPropertyDate]);
+                     //NSLog(@"comparisonResult: %d", comparisonResult);
+
+                     
+                     if(comparisonResult > 0) //Pictures after the specified date
                      {
                          [mtbA addObject:[UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]];
                      }
                      
-                     if (imagesFound==count)
+                     if (imagesFound==count[groupsChecked])
                      {
                          imgA=[[NSArray alloc] initWithArray:mtbA];
-                         NSLog(@"imgA: %@", imgA);
+                         //NSLog(@"imgA: %@", imgA);
+                         groupsChecked++;
                          
-                         //Get Current Date to update lastUpdateDate for future fetches
-                         NSDate *dateObject = [[NSDate alloc] init];
-                         dateObject = [NSDate date];
-                         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                         [dateFormatter setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
-                         lastUpdateDate = [dateFormatter stringFromDate:(dateObject)];
-                         NSLog(@"LastUpdateDate: %@", lastUpdateDate);
+                         //If both "Saved Pictures" and "Camera Roll" have been checked, update lastUpdateDate to current date.
+                         if(groupsChecked == 2)
+                         {
+                             //Get Current Date to update lastUpdateDate for future fetches
+                             lastUpdateDate = [NSDate date];
+                         }
                          
                          if(!imgA || ![imgA count]) //If no new pictures found
                          {
@@ -111,10 +120,22 @@ static PictureManager* _sharedPicManager = nil;
                          }
                          else
                          {
+                             //NSLog(@"Completing OCR");
                              // Running OCR
                              OCR *ocr = [[OCR alloc] init];
-                             NSString *extractedText = [[NSString alloc] init];
-                             extractedText = [ocr extractText:imgA];
+                             [ocr extractText:imgA];
+                             
+                             // Re-declaring variables
+                             imagesFound = 0;
+                             imgA = nil;
+                                imgA=[[NSArray alloc] init];
+                             mtbA = nil;
+                                mtbA =[[NSMutableArray alloc]init];
+                             NSMutableArray* urlDictionaries = [[NSMutableArray alloc] init];
+                             library = nil;
+                                library = [[ALAssetsLibrary alloc] init];
+                             urlA = nil;
+                                urlA = [[NSMutableArray alloc] init];
                          }
                      }
                      
@@ -127,6 +148,7 @@ static PictureManager* _sharedPicManager = nil;
     
     NSMutableArray *groups = [[NSMutableArray alloc] init];
     groups = [[NSMutableArray alloc] init];
+    static int i = 0;
     
     void (^ assetGroupEnumerator) ( ALAssetsGroup *, BOOL *)= ^(ALAssetsGroup *group, BOOL *stop)
     {
@@ -135,16 +157,16 @@ static PictureManager* _sharedPicManager = nil;
             //NSLog(@"Group Name: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
             [group enumerateAssetsUsingBlock:assetEnumerator];
             [groups addObject:group];
-            count=[group numberOfAssets];
+            count[i]=[group numberOfAssets];
+            i++;
+
         }
-        
     };
     
     [library enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:assetGroupEnumerator
                          failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
     return;
 }
-
 
 
 

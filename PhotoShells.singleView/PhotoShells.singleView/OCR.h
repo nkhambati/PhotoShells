@@ -11,9 +11,9 @@
 
 @interface OCR : NSObject
 {
-    NSString *extractedText;
 }
 
-- (NSString *)extractText:(NSArray *)imgArray;
+- (void)extractText:(NSArray *)imgArray;
+-(UIImage *)resizeImage:(UIImage *)image;
 
 @end

@@ -7,30 +7,64 @@
 //
 
 #import "OCR.h"
+#include <QuartzCore/QuartzCore.h>
+#include <CoreImage/CoreImage.h>
 
 @implementation OCR
 
-- (NSString *)extractText:(NSArray *)imgArray
+- (void)extractText:(NSArray *)imgArray
 {
     if([imgArray count]>0)
     {
-    
-        extractedText = [[NSString alloc] init];
-    
         NSEnumerator *images = [imgArray objectEnumerator];
-        id image;
+        UIImage *image = [[UIImage alloc] init];
     
         Tesseract* tesseract = [[Tesseract alloc] initWithDataPath:@"tessdata" language:@"eng"];
     
         while(image = [images nextObject])
         {
-            [tesseract setImage:image];
+            NSLog(@"image: %@", image);
+            
+            UIImage *image2 = [[UIImage alloc] init];
+            image2 = [self resizeImage:image];
+            [tesseract setImage:image2];
             [tesseract recognize];
+            NSLog(@"%@", [tesseract recognizedText]);
 
-        }    
+        }
+        
+      /* // TO DO: Delete -- just proves that tesseract works
+        UIImage *img = [[UIImage alloc] init];
+        img = [UIImage imageNamed:@"sample3.jpg"];
+        NSLog(@"%@", img);
+
+        [tesseract setImage:img];
+        [tesseract recognize];
+        
+        NSLog(@"%@", [tesseract recognizedText]);*/
     }
+}
+
+-(UIImage *)resizeImage:(UIImage *)image
+{
+    CGImageRef imageRef = [image CGImage];
+    CGImageAlphaInfo alphaInfo = CGImageGetAlphaInfo(imageRef);
     
-    return @"Blah";
+    int width = image.size.width * 3;
+    int height = image.size.height * 3;
+    
+    //if (alphaInfo == kCGImageAlphaNone)
+    alphaInfo = kCGImageAlphaNoneSkipLast;
+    
+    CGContextRef bitmap = CGBitmapContextCreate(NULL, width, height, CGImageGetBitsPerComponent(imageRef), 4 * width, CGImageGetColorSpace(imageRef), alphaInfo);
+    CGContextDrawImage(bitmap, CGRectMake(0, 0, width, height), imageRef);
+    CGImageRef ref = CGBitmapContextCreateImage(bitmap);
+    UIImage *result = [UIImage imageWithCGImage:ref];
+    
+    CGContextRelease(bitmap);
+    CGImageRelease(ref);
+    
+    return result;
 }
 
 @end

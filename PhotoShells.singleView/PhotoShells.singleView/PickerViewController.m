@@ -79,10 +79,18 @@
     {
         [[CategorizationSettings sharedCatSettings] setSeconds:(24)];
     }
-    else if(row == 2) //weekly
+    else if(row == 2)//weekly
     {
         [[CategorizationSettings sharedCatSettings] setSeconds:(168)];
     }
+    else
+    {
+        NSLog(@"Row is nil");
+    }
+    
+    //TO DO: Uncomment later.
+    //[[PictureManager sharedPicManager] invalidateTimer];
+    //[[PictureManager sharedPicManager] setTimer];
 }
 
 
