@@ -22,7 +22,7 @@
 -(IBAction)categorizeClicked:(id)sender
 {
     picManager = [[PictureManager alloc] init];
-    [picManager fetchPictures:@"2013-02-06 00-00-00"];
+    [picManager fetchPictures];
 }
 
 - (IBAction)imageProcessing:(id)sender {
@@ -40,20 +40,17 @@
     {
         // Once app is turned on, sets to default settings.
     
-        // Categorization frequency is set to daily
-        catSettings = [[CategorizationSettings alloc] init];
-        [catSettings setSeconds:(24)];
+        // Categorization frequency is set to hourly by default
+        [[CategorizationSettings sharedCatSettings] setSeconds:(1)];
     
-        // Timer is scheduled to run 'fetchPictures' at the specified interval
-        timer = [NSTimer scheduledTimerWithTimeInterval:10.0
-                                                    target:self
-                                                    selector:@selector(runFetchPictures)
-                                                    userInfo:nil repeats:YES];
+        // Set timer to run at specified interval in CategorizationSettings
+        [[PictureManager sharedPicManager] setTimer];
+
     }
     else
     {
         // Stopping timer. Pictures will no longer be fetched.
-        [timer invalidate];
+        [[PictureManager sharedPicManager] invalidateTimer];
     }
 
 }
@@ -61,7 +58,7 @@
 -(void)runFetchPictures
 {
     picManager = [[PictureManager alloc] init];
-    [picManager fetchPictures:@"2013-02-06 00-00-00"];
+    [picManager fetchPictures];
 }
 
 @end

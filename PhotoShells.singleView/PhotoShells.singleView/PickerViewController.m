@@ -32,7 +32,7 @@
     [super viewDidLoad];
     
     //picker = [[UIPickerView alloc] init; // initWithFrame:CGRectMake(100, 2, 320, 200)];
-    _inputArray = [[NSArray alloc] initWithObjects:@"Daily", @"Hourly", @"Weekly", @"Biweekly", @"Monthly", nil];
+    _inputArray = [[NSArray alloc] initWithObjects:@"Hourly", @"Daily", @"Weekly", nil];
     
     
     picker.delegate = self;
@@ -70,7 +70,19 @@
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    //Add code here to respond to the selected value in the pickerView
+    // Change Categorization Settings according to row picked.
+    if(row == 0) //hourly
+    {
+        [[CategorizationSettings sharedCatSettings] setSeconds:(1)];
+    }
+    else if(row == 1) //daily
+    {
+        [[CategorizationSettings sharedCatSettings] setSeconds:(24)];
+    }
+    else if(row == 2) //weekly
+    {
+        [[CategorizationSettings sharedCatSettings] setSeconds:(168)];
+    }
 }
 
 

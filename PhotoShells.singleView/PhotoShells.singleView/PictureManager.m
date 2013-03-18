@@ -12,8 +12,43 @@ static int count = 0;
 static int imagesFound = 0;
 
 @implementation PictureManager
+static PictureManager* _sharedPicManager = nil;
 
--(void)fetchPictures:(NSString *)specifiedDate
++(PictureManager*)sharedPicManager
+{
+	@synchronized([PictureManager class])
+	{
+		if (!_sharedPicManager)
+			[[self alloc] init];
+        
+		return _sharedPicManager;
+	}
+    
+	return nil;
+}
+
++(id)alloc
+{
+	@synchronized([PictureManager class])
+	{
+		NSAssert(_sharedPicManager == nil, @"Attempted to allocate a second instance of a singleton.");
+		_sharedPicManager = [super alloc];
+		return _sharedPicManager;
+	}
+    
+	return nil;
+}
+
+-(id)init {
+	self = [super init];
+	if (self != nil) {
+		// initialize stuff here
+	}
+    
+	return self;
+}
+
+-(void)fetchPictures
 {
     // Initializing Variables
     imgA=[[NSArray alloc] init];
@@ -24,11 +59,11 @@ static int imagesFound = 0;
     
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop)
     {
-
+        
         if(result != nil)
         {
             if([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto])
-            {                
+            {
                 [urlDictionaries addObject:[result valueForProperty:ALAssetPropertyURLs]];
                 
                 NSURL *url= (NSURL*) [[result defaultRepresentation]url];
@@ -37,14 +72,21 @@ static int imagesFound = 0;
                 [library assetForURL:url resultBlock:^(ALAsset *asset)
                  {
                      imagesFound++;
-
+                     
+                     // If lastUpdateDate == nil, then set it to random value
+                     if(!lastUpdateDate)
+                     {
+                         // TO DO: Change this value.
+                         lastUpdateDate = @"2013-02-06 00-00-00";
+                     }
+                     
                      // Finding date of pictures taken
                      NSDate *dateTaken = [asset valueForProperty:(ALAssetPropertyDate)];
                      NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
                      [dateFormat setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
                      NSString *date = [dateFormat stringFromDate:(dateTaken)];
-                     NSComparisonResult result = [date compare:specifiedDate];
-                    
+                     NSComparisonResult result = [date compare:lastUpdateDate];
+                     
                      if(result > 0) //Pictures after the specified date
                      {
                          [mtbA addObject:[UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]];
@@ -63,7 +105,7 @@ static int imagesFound = 0;
                          lastUpdateDate = [dateFormatter stringFromDate:(dateObject)];
                          NSLog(@"LastUpdateDate: %@", lastUpdateDate);
                          
-                         if(!imgA || ![imgA count])
+                         if(!imgA || ![imgA count]) //If no new pictures found
                          {
                              return;
                          }
@@ -95,11 +137,11 @@ static int imagesFound = 0;
             [groups addObject:group];
             count=[group numberOfAssets];
         }
-
+        
     };
-
+    
     [library enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:assetGroupEnumerator
-                              failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
+                         failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
     return;
 }
 
@@ -138,6 +180,25 @@ static int imagesFound = 0;
 -(NSMutableArray*)getURLs
 {
     return urlA;
+}
+
+-(void)setTimer;
+{
+    // TO DO: Delete this and uncomment the line following
+    timer = [NSTimer scheduledTimerWithTimeInterval:10.0
+                                             target:self
+                                           selector:@selector(fetchPictures)
+                                           userInfo:nil repeats:YES];
+    
+    /*timer = [NSTimer scheduledTimerWithTimeInterval:[[CategorizationSettings sharedCatSettings] getSeconds]
+                                             target:self
+                                           selector:@selector(fetchPictures)
+                                           userInfo:nil repeats:YES];*/
+}
+
+-(void)invalidateTimer
+{
+    [timer invalidate];
 }
 
 

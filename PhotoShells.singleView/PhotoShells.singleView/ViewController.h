@@ -10,7 +10,8 @@
     CategorizationSettings *catSettings;
     NSTimer *timer;
     
-    IBOutlet UIButton *getPics;
+    //IBOutlet UIButton *getPics;
+    
 }
 
 @property (nonatomic, retain)UIButton *getPics;
