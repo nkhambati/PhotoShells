@@ -81,7 +81,7 @@ static PictureManager* _sharedPicManager = nil;
                          lastUpdateDate = [[NSDate alloc] init];
                          NSDateFormatter *df = [[NSDateFormatter alloc] init];
                          [df setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-                         lastUpdateDate = [df dateFromString: @"2013-02-06 00:00:00"];
+                         lastUpdateDate = [df dateFromString: @"2013-01-00 00:00:00"];
 
                      }
                      
