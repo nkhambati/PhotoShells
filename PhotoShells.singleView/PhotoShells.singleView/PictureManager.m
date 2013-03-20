@@ -60,6 +60,7 @@ static PictureManager* _sharedPicManager = nil;
     
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop)
     {
+        NSLog(@"in pictures enum block");
         
         if(result != nil)
         {
@@ -77,11 +78,12 @@ static PictureManager* _sharedPicManager = nil;
                      // If lastUpdateDate == nil, then set it to random value
                      if(!lastUpdateDate)
                      {
+                         NSLog(@"lastupdate date is null");
                          // TO DO: Change this value.
                          lastUpdateDate = [[NSDate alloc] init];
                          NSDateFormatter *df = [[NSDateFormatter alloc] init];
                          [df setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-                         lastUpdateDate = [df dateFromString: @"2013-01-00 00:00:00"];
+                         lastUpdateDate = [df dateFromString: @"2013-01-01 00:00:01"];
 
                      }
                      
@@ -90,10 +92,10 @@ static PictureManager* _sharedPicManager = nil;
                      NSComparisonResult comparisonResult = [dateTaken compare:lastUpdateDate];
                      
                      //TO DO: Delete Commenting
-                     //NSLog(@"lastUpdateDate: %@", lastUpdateDate);
-                     //NSLog(@"UIImage: %@", [UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]);
-                     //NSLog(@"Date: %@", [result valueForProperty:ALAssetPropertyDate]);
-                     //NSLog(@"comparisonResult: %d", comparisonResult);
+                     NSLog(@"lastUpdateDate: %@", lastUpdateDate);
+                     NSLog(@"UIImage: %@", [UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]);
+                     NSLog(@"Date: %@", [result valueForProperty:ALAssetPropertyDate]);
+                     NSLog(@"comparisonResult: %d", comparisonResult);
 
                      
                      if(comparisonResult > 0) //Pictures after the specified date
@@ -104,7 +106,7 @@ static PictureManager* _sharedPicManager = nil;
                      if (imagesFound==count[groupsChecked])
                      {
                          imgA=[[NSArray alloc] initWithArray:mtbA];
-                         //NSLog(@"imgA: %@", imgA);
+                         NSLog(@"imgA: %@", imgA);
                          groupsChecked++;
                          
                          //If both "Saved Pictures" and "Camera Roll" have been checked, update lastUpdateDate to current date.
@@ -116,11 +118,12 @@ static PictureManager* _sharedPicManager = nil;
                          
                          if(!imgA || ![imgA count]) //If no new pictures found
                          {
+                             NSLog(@"in the if");
                              return;
                          }
                          else
                          {
-                             //NSLog(@"Completing OCR");
+                             NSLog(@"Completing OCR");
                              // Running OCR
                              OCR *ocr = [[OCR alloc] init];
                              [ocr extractText:imgA];
@@ -155,7 +158,7 @@ static PictureManager* _sharedPicManager = nil;
         NSLog(@"in asset Group Enum");
         if(group != nil)
         {
-            //NSLog(@"Group Name: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
+            NSLog(@"Group Name: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
             [group enumerateAssetsUsingBlock:assetEnumerator];
             [groups addObject:group];
             count[i]=[group numberOfAssets];

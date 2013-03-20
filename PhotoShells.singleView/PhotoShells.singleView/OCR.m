@@ -14,6 +14,7 @@
 
 - (void)extractText:(NSArray *)imgArray
 {
+    NSLog(@"in extract text");
     if([imgArray count]>0)
     {
         NSEnumerator *images = [imgArray objectEnumerator];
@@ -68,8 +69,8 @@
             float imageEntropy = [self ImageEntropy:pixelProbabilityArray];
             NSLog(@"Image Entropy: %f", imageEntropy);
             
-            [tesseract setImage:image2];
-            [tesseract recognize];
+            //[tesseract setImage:image2];
+            //[tesseract recognize];
             //NSLog(@"%@", [tesseract recognizedText]);
 
         }
