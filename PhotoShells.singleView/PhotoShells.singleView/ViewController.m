@@ -36,11 +36,29 @@
 
 - (IBAction)appSwitch:(UISwitch *)sender
 {
-    NSLog(@"in run OCR");
-    imgArray = [picManager getUIImage];
-    OCR *ocr = [[OCR alloc] init];
-    NSString *extractedText = [[NSString alloc] init];
-    extractedText = [ocr extractText:imgArray];
+    if([sender isOn])
+    {
+        // Once app is turned on, sets to default settings.
+    
+        // Categorization frequency is set to hourly by default
+        [[CategorizationSettings sharedCatSettings] setSeconds:(1)];
+    
+        // Set timer to run at specified interval in CategorizationSettings
+        [[PictureManager sharedPicManager] setTimer];
+
+    }
+    else
+    {
+        // Stopping timer. Pictures will no longer be fetched.
+        [[PictureManager sharedPicManager] invalidateTimer];
+    }
+
+}
+
+-(void)runFetchPictures
+{
+    picManager = [[PictureManager alloc] init];
+    [picManager fetchPictures];
 }
 
 @end

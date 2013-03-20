@@ -14,9 +14,12 @@
 
 - (void)extractText:(NSArray *)imgArray
 {
-    NSLog(@"in OCR extract text");
-    if(!imgArray || ![imgArray count])
-    { NSLog(@"Array is empty");}
+    if([imgArray count]>0)
+    {
+        NSEnumerator *images = [imgArray objectEnumerator];
+        UIImage *image = [[UIImage alloc] init];
+    
+        Tesseract* tesseract = [[Tesseract alloc] initWithDataPath:@"tessdata" language:@"eng"];
     
         while(image = [images nextObject])
         {
@@ -51,10 +54,16 @@
             {
                 NSLog(@"%d %d", i, counts[i]);
             }
+            
+            //call the histogram function to get the pixel probabilities
+            double* pixelProbabilityArray = [self ImageHistogram:counts];
+            
+            //call the entropy function to get the image entropy
+            float imageEntropy = [self ImageEntropy:pixelProbabilityArray];
 
             
-            [tesseract setImage:image2];
-            [tesseract recognize];
+            //[tesseract setImage:image2];
+            //[tesseract recognize];
             //NSLog(@"%@", [tesseract recognizedText]);
 
         }
@@ -155,6 +164,42 @@
     return pixelData;
     
     #undef BYTES_PER_PIXEL
+}
+
+
+//calculating the probability values for each pixel to obtain a histogram
+- (double *)ImageHistogram:(int *)pixel_counts_array
+{
+    int num_occurrences, p_count;
+    double num_pixels = 0;
+    double pixel_prob_array[256];
+    
+    for (p_count = 0; p_count < sizeof(pixel_prob_array); p_count++) {
+        pixel_prob_array[p_count] = 0;
+    }
+    
+    for (p_count = 0; p_count < sizeof(pixel_counts_array); p_count++) {
+        num_pixels += pixel_counts_array[p_count];
+    }
+    
+    for (p_count = 0; p_count < sizeof(pixel_counts_array); p_count++) {
+        num_occurrences = pixel_counts_array[p_count];
+        pixel_prob_array[p_count] = num_occurrences/num_pixels;        
+    }
+}
+
+//calculating the image entropy using the historgram values
+- (float)ImageEntropy:(double *)pixel_prob_array
+{
+    float temp_ent, imageEntropy = 0.0f;
+    
+    for (int ent = 0; ent < sizeof(pixel_prob_array); ent++) {
+        temp_ent = pixel_prob_array[ent]*log2f(pixel_prob_array[ent]);
+        imageEntropy += temp_ent;
+    }
+    
+    imageEntropy = -imageEntropy;
+    return imageEntropy;
 }
 
 
