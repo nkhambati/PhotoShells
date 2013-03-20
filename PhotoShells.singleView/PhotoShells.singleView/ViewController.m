@@ -21,6 +21,7 @@
 
 -(IBAction)categorizeClicked:(id)sender
 {
+    NSLog(@"in categorizeClicked");
     picManager = [[PictureManager alloc] init];
     [picManager fetchPictures];
 }
