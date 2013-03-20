@@ -6,7 +6,7 @@
 
 @implementation ViewController
 
-
+//@synthesize getPics = _getPicks;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -34,7 +34,7 @@
 - (IBAction)categorisationLogs:(id)sender {
 }
 
-- (IBAction)appSwitch:(id)sender
+- (IBAction)appSwitch:(UISwitch *)sender
 {
     NSLog(@"in run OCR");
     imgArray = [picManager getUIImage];

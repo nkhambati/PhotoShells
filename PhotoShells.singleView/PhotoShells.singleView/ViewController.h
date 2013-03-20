@@ -1,4 +1,5 @@
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 #import "PictureManager.h"
 #import "OCR.h"
 #import "CategorizationSettings.h"
@@ -8,8 +9,10 @@
     NSArray *imgArray;
     PictureManager *picManager;
     CategorizationSettings *catSettings;
+    NSTimer *timer;
     
-    IBOutlet UIButton *getPics;
+    //IBOutlet UIButton *getPics;
+    
 }
 
 @property (nonatomic, retain)UIButton *getPics;
@@ -18,10 +21,7 @@
 - (IBAction)imageProcessing:(id)sender;
 - (IBAction)folderSettings:(id)sender;
 - (IBAction)categorisationLogs:(id)sender;
-- (IBAction)appSwitch:(id)sender;
-
-//Image Categorization
--(IBAction)selected;
+- (IBAction)appSwitch:(UISwitch *)sender;
 
 
 -(IBAction)categorizeClicked:(id)sender;

@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #include <AssetsLibrary/AssetsLibrary.h> 
 #import "OCR.h"
+#import "CategorizationSettings.h"
 
 @interface PictureManager : NSObject
 {
@@ -17,11 +18,16 @@
     NSMutableArray *mtbA;
     NSFileManager *manager;
     NSMutableArray *urlA;
-    //NSOperationQueue *operationQueue;
+    NSDate *lastUpdateDate;
+    NSTimer *timer;
 }
 
++(PictureManager *)sharedPicManager;
 -(void)fetchPictures;
 -(void)CopyPictureToAlbum:(NSURL *)url Location: (NSString *)album;
 -(NSArray*)getUIImage;
 -(NSMutableArray*)getURLs;
+-(void)setTimer;
+-(void)invalidateTimer;
+
 @end

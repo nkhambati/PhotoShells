@@ -10,12 +10,48 @@
 
 @implementation CategorizationSettings
 
--(void)setSeconds:(NSInteger)sec
+static CategorizationSettings* _sharedCatSettings = nil;
+
++(CategorizationSettings*)sharedCatSettings
 {
-    seconds = (sec * 3600);
+	@synchronized([CategorizationSettings class])
+	{
+		if (!_sharedCatSettings)
+			[[self alloc] init];
+        
+		return _sharedCatSettings;
+	}
+    
+	return nil;
 }
 
--(NSInteger)getSeconds
++(id)alloc
+{
+	@synchronized([CategorizationSettings class])
+	{
+		NSAssert(_sharedCatSettings == nil, @"Attempted to allocate a second instance of a singleton.");
+		_sharedCatSettings = [super alloc];
+		return _sharedCatSettings;
+	}
+    
+	return nil;
+}
+
+-(id)init {
+	self = [super init];
+	if (self != nil) {
+		// initialize stuff here
+	}
+    
+	return self;
+}
+
+-(void)setSeconds:(double)hours
+{
+    seconds = (hours * 3600);
+}
+
+-(double)getSeconds
 {
     return seconds;
 }
