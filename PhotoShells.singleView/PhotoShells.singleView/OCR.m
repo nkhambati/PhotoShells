@@ -58,12 +58,18 @@
             //call the histogram function to get the pixel probabilities
             double* pixelProbabilityArray = [self ImageHistogram:counts];
             
+            NSLog(@"pixel probabilities:");
+            for(int i = 0; i < 256; i++)
+            {
+                NSLog(@"%d %f", i, pixelProbabilityArray[i]);
+            }
+            
             //call the entropy function to get the image entropy
             float imageEntropy = [self ImageEntropy:pixelProbabilityArray];
-
+            NSLog(@"Image Entropy: %f", imageEntropy);
             
-            //[tesseract setImage:image2];
-            //[tesseract recognize];
+            [tesseract setImage:image2];
+            [tesseract recognize];
             //NSLog(@"%@", [tesseract recognizedText]);
 
         }
