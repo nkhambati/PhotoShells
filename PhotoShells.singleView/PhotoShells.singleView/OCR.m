@@ -50,14 +50,22 @@
                     counts[pixelInt] = counts[pixelInt] + 1;
                 }
             }
-            
+           /*
             for(int i = 0; i < 256; i++)
             {
                 NSLog(@"%d %d", i, counts[i]);
-            }
+            }*/
             
             //call the histogram function to get the pixel probabilities
-            double* pixelProbabilityArray = [self ImageHistogram:counts];
+            //double* pixelProbabilityArray = [self ImageHistogram:counts];
+            double pixelProbabilityArray[256];
+           
+            for(int i = 0; i < 256; i++)
+            {
+                pixelProbabilityArray[i] = 0;
+            }
+            
+            [self ImageHistogram:counts :pixelProbabilityArray];
             
             NSLog(@"pixel probabilities:");
             for(int i = 0; i < 256; i++)
@@ -175,33 +183,37 @@
 
 
 //calculating the probability values for each pixel to obtain a histogram
-- (double *)ImageHistogram:(int *)pixel_counts_array
+- (void)ImageHistogram:(int *)pixel_counts_array :(double *)pixelProbabilityArray
 {
+    NSLog(@"in histogram");
     int num_occurrences, p_count;
     double num_pixels = 0;
-    double pixel_prob_array[256];
     
-    for (p_count = 0; p_count < sizeof(pixel_prob_array); p_count++) {
-        pixel_prob_array[p_count] = 0;
-    }
     
-    for (p_count = 0; p_count < sizeof(pixel_counts_array); p_count++) {
+    for (p_count = 0; p_count < 256; p_count++) {
         num_pixels += pixel_counts_array[p_count];
     }
+    NSLog(@"num_pixels: %f", num_pixels);
     
-    for (p_count = 0; p_count < sizeof(pixel_counts_array); p_count++) {
-        num_occurrences = pixel_counts_array[p_count];
-        pixel_prob_array[p_count] = num_occurrences/num_pixels;        
+    for (p_count = 0; p_count < 256; p_count++) {
+         num_occurrences = pixel_counts_array[p_count];
+        pixelProbabilityArray[p_count] = num_occurrences/num_pixels;        
     }
+    NSLog(@"returning histogram");
 }
 
 //calculating the image entropy using the historgram values
 - (float)ImageEntropy:(double *)pixel_prob_array
 {
-    float temp_ent, imageEntropy = 0.0f;
+    float temp_ent = 0.0f, imageEntropy = 0.0f;
     
-    for (int ent = 0; ent < sizeof(pixel_prob_array); ent++) {
-        temp_ent = pixel_prob_array[ent]*log2f(pixel_prob_array[ent]);
+    for (int ent = 0; ent < 256; ent++) {
+        double p = pixel_prob_array[ent];
+        double p_log = 0.0;
+        if (p != 0) {
+            p_log = log2f(p);
+        }
+        temp_ent = p*p_log;
         imageEntropy += temp_ent;
     }
     
