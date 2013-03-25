@@ -14,14 +14,16 @@
 
 - (void)extractText:(NSArray *)imgArray
 {
-    NSLog(@"in extract text");
+    //NSLog(@"in extract text");
     if([imgArray count]>0)
     {
         NSEnumerator *images = [imgArray objectEnumerator];
         UIImage *image = [[UIImage alloc] init];
+        float img_entropies[[imgArray count]];
     
         Tesseract* tesseract = [[Tesseract alloc] initWithDataPath:@"tessdata" language:@"eng"];
-    
+        
+        int entropy_counter = 0;
         while(image = [images nextObject])
         {
             NSLog(@"image: %@", image);
@@ -67,21 +69,22 @@
             
             [self ImageHistogram:counts :pixelProbabilityArray];
             
-            NSLog(@"pixel probabilities:");
+            /*NSLog(@"pixel probabilities:");
             for(int i = 0; i < 256; i++)
             {
                 NSLog(@"%d %f", i, pixelProbabilityArray[i]);
-            }
+            }*/
             
             //call the entropy function to get the image entropy
-            float imageEntropy = [self ImageEntropy:pixelProbabilityArray];
-            NSLog(@"Image Entropy: %f", imageEntropy);
-            
+            img_entropies[entropy_counter] = [self ImageEntropy:pixelProbabilityArray];
+            //NSLog(@"Entropy %d: %f", entropy_counter, img_entropies[entropy_counter]);
+            entropy_counter++;
             //[tesseract setImage:image2];
             //[tesseract recognize];
             //NSLog(@"%@", [tesseract recognizedText]);
 
         }
+        NSLog(@"Entropies: %", img_entropies);
     }
 }
 
@@ -185,7 +188,7 @@
 //calculating the probability values for each pixel to obtain a histogram
 - (void)ImageHistogram:(int *)pixel_counts_array :(double *)pixelProbabilityArray
 {
-    NSLog(@"in histogram");
+    //NSLog(@"in histogram");
     int num_occurrences, p_count;
     double num_pixels = 0;
     
@@ -199,7 +202,7 @@
          num_occurrences = pixel_counts_array[p_count];
         pixelProbabilityArray[p_count] = num_occurrences/num_pixels;        
     }
-    NSLog(@"returning histogram");
+    //NSLog(@"returning histogram");
 }
 
 //calculating the image entropy using the historgram values
