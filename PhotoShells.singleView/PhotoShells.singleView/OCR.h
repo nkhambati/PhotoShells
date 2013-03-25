@@ -11,9 +11,13 @@
 
 @interface OCR : NSObject
 {
-    NSString *extractedText;
 }
 
-- (NSString *)extractText:(NSArray *)imgArray;
+- (void)extractText:(NSArray *)imgArray;
+-(UIImage *)resizeImage:(UIImage *)image;
+-(UIImage *)grayScale:(UIImage *)image;
+-(unsigned char *) grayscalePixels:(UIImage *)image;
+-(void)ImageHistogram:(int *)pixel_counts_array :(double *)pixelProbabilityArray;
+
 
 @end

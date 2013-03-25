@@ -12,6 +12,7 @@
 {
     double seconds;
 }
++(CategorizationSettings *)sharedCatSettings;
 -(void)setSeconds:(double)hours;
 -(double)getSeconds;
 

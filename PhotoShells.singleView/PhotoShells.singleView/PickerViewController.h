@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CategorizationSettings.h"
+#import "PictureManager.h"
 
 @interface PickerViewController : UIViewController <UIPickerViewDelegate, UIPickerViewDataSource>
 {

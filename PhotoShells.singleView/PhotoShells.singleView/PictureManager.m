@@ -8,12 +8,48 @@
 
 #import "PictureManager.h"
 
-static int count = 0;
+NSInteger count[2];
 static int imagesFound = 0;
+static int groupsChecked = 0;
 
 @implementation PictureManager
+static PictureManager* _sharedPicManager = nil;
 
--(void)fetchPictures:(NSString *)specifiedDate
++(PictureManager*)sharedPicManager
+{
+	@synchronized([PictureManager class])
+	{
+		if (!_sharedPicManager)
+			[[self alloc] init];
+        
+		return _sharedPicManager;
+	}
+    
+	return nil;
+}
+
++(id)alloc
+{
+	@synchronized([PictureManager class])
+	{
+		NSAssert(_sharedPicManager == nil, @"Attempted to allocate a second instance of a singleton.");
+		_sharedPicManager = [super alloc];
+		return _sharedPicManager;
+	}
+    
+	return nil;
+}
+
+-(id)init {
+	self = [super init];
+	if (self != nil) {
+		// initialize stuff here
+	}
+    
+	return self;
+}
+
+-(void)fetchPictures
 {
     // Initializing Variables
     imgA=[[NSArray alloc] init];
@@ -24,11 +60,12 @@ static int imagesFound = 0;
     
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop)
     {
-
+        //NSLog(@"in pictures enum block");
+        
         if(result != nil)
         {
             if([[result valueForProperty:ALAssetPropertyType] isEqualToString:ALAssetTypePhoto])
-            {                
+            {
                 [urlDictionaries addObject:[result valueForProperty:ALAssetPropertyURLs]];
                 
                 NSURL *url= (NSURL*) [[result defaultRepresentation]url];
@@ -37,42 +74,71 @@ static int imagesFound = 0;
                 [library assetForURL:url resultBlock:^(ALAsset *asset)
                  {
                      imagesFound++;
+                     
+                     // If lastUpdateDate == nil, then set it to random value
+                     if(!lastUpdateDate)
+                     {
+                         NSLog(@"lastupdate date is null");
+                         // TO DO: Change this value.
+                         lastUpdateDate = [[NSDate alloc] init];
+                         NSDateFormatter *df = [[NSDateFormatter alloc] init];
+                         [df setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
+                         lastUpdateDate = [df dateFromString: @"2013-01-01 00:00:01"];
 
+                     }
+                     
                      // Finding date of pictures taken
                      NSDate *dateTaken = [asset valueForProperty:(ALAssetPropertyDate)];
-                     NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-                     [dateFormat setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
-                     NSString *date = [dateFormat stringFromDate:(dateTaken)];
-                     NSComparisonResult result = [date compare:specifiedDate];
-                    
-                     if(result > 0) //Pictures after the specified date
+                     NSComparisonResult comparisonResult = [dateTaken compare:lastUpdateDate];
+                     
+                     //TO DO: Delete Commenting
+                    /* NSLog(@"lastUpdateDate: %@", lastUpdateDate);
+                     NSLog(@"UIImage: %@", [UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]);
+                     NSLog(@"Date: %@", [result valueForProperty:ALAssetPropertyDate]);
+                     NSLog(@"comparisonResult: %d", comparisonResult);
+                    */
+                     
+                     if(comparisonResult > 0) //Pictures after the specified date
                      {
                          [mtbA addObject:[UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]];
                      }
                      
-                     if (imagesFound==count)
+                     if (imagesFound==count[groupsChecked])
                      {
                          imgA=[[NSArray alloc] initWithArray:mtbA];
-                         NSLog(@"imgA: %@", imgA);
+                         //NSLog(@"imgA: %@", imgA);
+                         groupsChecked++;
                          
-                         //Get Current Date to update lastUpdateDate for future fetches
-                         NSDate *dateObject = [[NSDate alloc] init];
-                         dateObject = [NSDate date];
-                         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-                         [dateFormatter setDateFormat:@"yyyy-MM-dd HH-mm-ss"];
-                         lastUpdateDate = [dateFormatter stringFromDate:(dateObject)];
-                         NSLog(@"LastUpdateDate: %@", lastUpdateDate);
-                         
-                         if(!imgA || ![imgA count])
+                         //If both "Saved Pictures" and "Camera Roll" have been checked, update lastUpdateDate to current date.
+                         if(groupsChecked == 2)
                          {
+                             //Get Current Date to update lastUpdateDate for future fetches
+                             lastUpdateDate = [NSDate date];
+                         }
+                         
+                         if(!imgA || ![imgA count]) //If no new pictures found
+                         {
+                             //NSLog(@"in the if");
                              return;
                          }
                          else
                          {
+                             //NSLog(@"Completing OCR");
                              // Running OCR
                              OCR *ocr = [[OCR alloc] init];
-                             NSString *extractedText = [[NSString alloc] init];
-                             extractedText = [ocr extractText:imgA];
+                             [ocr extractText:imgA];
+                             
+                             // Re-declaring variables
+                             imagesFound = 0;
+                             imgA = nil;
+                                imgA=[[NSArray alloc] init];
+                             mtbA = nil;
+                                mtbA =[[NSMutableArray alloc]init];
+                             NSMutableArray* urlDictionaries = [[NSMutableArray alloc] init];
+                             library = nil;
+                                library = [[ALAssetsLibrary alloc] init];
+                             urlA = nil;
+                                urlA = [[NSMutableArray alloc] init];
                          }
                      }
                      
@@ -85,24 +151,26 @@ static int imagesFound = 0;
     
     NSMutableArray *groups = [[NSMutableArray alloc] init];
     groups = [[NSMutableArray alloc] init];
+    static int i = 0;
     
     void (^ assetGroupEnumerator) ( ALAssetsGroup *, BOOL *)= ^(ALAssetsGroup *group, BOOL *stop)
     {
+        //NSLog(@"in asset Group Enum");
         if(group != nil)
         {
-            //NSLog(@"Group Name: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
+            NSLog(@"Group Name: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
             [group enumerateAssetsUsingBlock:assetEnumerator];
             [groups addObject:group];
-            count=[group numberOfAssets];
+            count[i]=[group numberOfAssets];
+            i++;
+
         }
-
     };
-
+    
     [library enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:assetGroupEnumerator
-                              failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
+                         failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
     return;
 }
-
 
 
 
@@ -131,6 +199,7 @@ static int imagesFound = 0;
 
 -(NSArray*)getUIImage
 {
+    //NSLog(@"in UI Image");
     return imgA;
 }
 
@@ -138,6 +207,25 @@ static int imagesFound = 0;
 -(NSMutableArray*)getURLs
 {
     return urlA;
+}
+
+-(void)setTimer;
+{
+    // TO DO: Delete this and uncomment the line following
+    timer = [NSTimer scheduledTimerWithTimeInterval:10.0
+                                             target:self
+                                           selector:@selector(fetchPictures)
+                                           userInfo:nil repeats:YES];
+    
+    /*timer = [NSTimer scheduledTimerWithTimeInterval:[[CategorizationSettings sharedCatSettings] getSeconds]
+                                             target:self
+                                           selector:@selector(fetchPictures)
+                                           userInfo:nil repeats:YES];*/
+}
+
+-(void)invalidateTimer
+{
+    [timer invalidate];
 }
 
 
