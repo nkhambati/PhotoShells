@@ -43,7 +43,7 @@
             for(int i=0;i<image.size.height;i++)
             {
                 for(int j=0;j<image.size.width;j++)
-                {
+                {                    
                     unsigned char data = pixelData[(i*((int)image.size.width))+j];
                     int pixelInt = data & 0xFFFF;
                     //NSLog(@"%d", pixelInt);
@@ -84,7 +84,11 @@
             //NSLog(@"%@", [tesseract recognizedText]);
 
         }
-        NSLog(@"Entropies: %", img_entropies);
+        NSLog(@"Entropies");
+        
+        for (int i = 0; i < entropy_counter; i++) {
+            NSLog(@"%d - %f", i, img_entropies[i]);
+        }
     }
 }
 
@@ -98,11 +102,15 @@
     
     alphaInfo = kCGImageAlphaNoneSkipLast;
     
-    CGContextRef bitmap = CGBitmapContextCreate(NULL, width, height, CGImageGetBitsPerComponent(imageRef), 4 * width, CGImageGetColorSpace(imageRef), alphaInfo);
+    CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef bitmap = CGBitmapContextCreate(NULL, width, height, CGImageGetBitsPerComponent(imageRef), 4 * width, rgbColorSpace, alphaInfo);
+
+    //CGContextRef bitmap = CGBitmapContextCreate(NULL, width, height, CGImageGetBitsPerComponent(imageRef), 4 * width, CGImageGetColorSpace(imageRef), alphaInfo);
     CGContextDrawImage(bitmap, CGRectMake(0, 0, width, height), imageRef);
     CGImageRef ref = CGBitmapContextCreateImage(bitmap);
     UIImage *result = [UIImage imageWithCGImage:ref];
     
+    CGColorSpaceRelease(rgbColorSpace);
     CGContextRelease(bitmap);
     CGImageRelease(ref);
     
