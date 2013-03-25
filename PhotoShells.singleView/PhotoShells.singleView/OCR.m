@@ -84,7 +84,11 @@
             //NSLog(@"%@", [tesseract recognizedText]);
 
         }
-        NSLog(@"Entropies: %", img_entropies);
+        NSLog(@"Entropies");
+        
+        for (int i = 0; i < entropy_counter; i++) {
+            NSLog(@"%d - %f", i, img_entropies[i]);
+        }
     }
 }
 
