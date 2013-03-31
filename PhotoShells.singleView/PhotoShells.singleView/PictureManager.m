@@ -57,6 +57,7 @@ static PictureManager* _sharedPicManager = nil;
     NSMutableArray* urlDictionaries = [[NSMutableArray alloc] init];
     library = [[ALAssetsLibrary alloc] init];
     urlA = [[NSMutableArray alloc] init];
+    imgURLs = [[NSMutableArray alloc] init];
     
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop)
     {
@@ -101,6 +102,7 @@ static PictureManager* _sharedPicManager = nil;
                      if(comparisonResult > 0) //Pictures after the specified date
                      {
                          [mtbA addObject:[UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]];
+                         [imgURLs addObject:url];
                      }
                      
                      if (imagesFound==count[groupsChecked])
@@ -128,7 +130,7 @@ static PictureManager* _sharedPicManager = nil;
                              OCR *ocr = [[OCR alloc] init];
                              [ocr extractText:imgA];
                              
-                             // Re-declaring variables
+                            // Re-declaring variables
                              imagesFound = 0;
                              imgA = nil;
                                 imgA=[[NSArray alloc] init];
@@ -139,6 +141,8 @@ static PictureManager* _sharedPicManager = nil;
                                 library = [[ALAssetsLibrary alloc] init];
                              urlA = nil;
                                 urlA = [[NSMutableArray alloc] init];
+                             imgURLs = nil;
+                                imgURLs = [[NSMutableArray alloc] init];
                          }
                      }
                      
