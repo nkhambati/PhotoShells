@@ -24,6 +24,7 @@
     NSLog(@"in categorizeClicked");
     picManager = [[PictureManager alloc] init];
     [picManager fetchPictures];
+    [picManager SaveImage:@"Document Pictures"];
 }
 
 - (IBAction)imageProcessing:(id)sender {
@@ -61,6 +62,8 @@
     picManager = [[PictureManager alloc] init];
     [picManager fetchPictures];
 }
+
+
 
 @end
 

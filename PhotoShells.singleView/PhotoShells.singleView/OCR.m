@@ -21,7 +21,7 @@
         UIImage *image = [[UIImage alloc] init];
         float img_entropies[[imgArray count]];
     
-        Tesseract* tesseract = [[Tesseract alloc] initWithDataPath:@"tessdata" language:@"eng"];
+      //  Tesseract* tesseract = [[Tesseract alloc] initWithDataPath:@"tessdata" language:@"eng"];
         
         int entropy_counter = 0;
         while(image = [images nextObject])
