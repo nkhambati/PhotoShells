@@ -22,9 +22,8 @@
 -(IBAction)categorizeClicked:(id)sender
 {
     NSLog(@"in categorizeClicked");
-    picManager = [[PictureManager alloc] init];
-    [picManager fetchPictures];
-    [picManager SaveImage:@"Document Pictures"];
+    [[PictureManager sharedPicManager] fetchPictures];
+    [[PictureManager sharedPicManager] SaveImage:@"Documents"];
 }
 
 - (IBAction)imageProcessing:(id)sender {

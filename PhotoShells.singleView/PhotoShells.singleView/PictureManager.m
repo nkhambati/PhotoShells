@@ -277,12 +277,12 @@ static PictureManager* _sharedPicManager = nil;
         //If the album doesnt exist
         if(group == nil && albumFound == false)
         {
-            __weak ALAssetsLibrary * weakSelf = self;
+            ALAssetsLibrary * weakSelf = self;
         
             //Creates a new album
             [library addAssetsGroupAlbumWithName:album resultBlock:^(ALAssetsGroup *group)
              {
-                for (int i = 0; i <[urlA count]; i++)
+                 for (int i = 0; i <[urlA count]; i++)
                  {
                     [weakSelf assetForURL:urlA[i] resultBlock:^(ALAsset *asset) //converts url to a picture
                      {
