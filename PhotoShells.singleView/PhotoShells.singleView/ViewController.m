@@ -22,8 +22,7 @@
 -(IBAction)categorizeClicked:(id)sender
 {
     NSLog(@"in categorizeClicked");
-    picManager = [[PictureManager alloc] init];
-    [picManager fetchPictures];
+    [[PictureManager sharedPicManager] fetchPictures];
 }
 
 - (IBAction)imageProcessing:(id)sender {
@@ -58,8 +57,7 @@
 
 -(void)runFetchPictures
 {
-    picManager = [[PictureManager alloc] init];
-    [picManager fetchPictures];
+    [[PictureManager sharedPicManager] fetchPictures];
 }
 
 @end
