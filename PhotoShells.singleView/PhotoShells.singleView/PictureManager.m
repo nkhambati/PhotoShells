@@ -8,11 +8,11 @@
 
 #import "PictureManager.h"
 
-NSInteger count[2];
 static int imagesFound = 0;
 static int groupsChecked = 0;
 
 @implementation PictureManager
+
 static PictureManager* _sharedPicManager = nil;
 
 +(PictureManager*)sharedPicManager
@@ -134,7 +134,7 @@ static PictureManager* _sharedPicManager = nil;
                                 imgA=[[NSArray alloc] init];
                              mtbA = nil;
                                 mtbA =[[NSMutableArray alloc]init];
-                             NSMutableArray* urlDictionaries = [[NSMutableArray alloc] init];
+                             //NSMutableArray* urlDictionaries = [[NSMutableArray alloc] init];
                              library = nil;
                                 library = [[ALAssetsLibrary alloc] init];
                              urlA = nil;
@@ -173,29 +173,145 @@ static PictureManager* _sharedPicManager = nil;
 }
 
 
-
--(void)CopyPictureToAlbum:(NSURL *)url
-                 Location: (NSString *)album
+/*-(ALAssetsGroup*) FindAlbum:(NsString *)album
 {
+    _block ALAssetsGroup* groupFound;
+    
+    [library enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop)
+    {
+        if([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:album]) //found album
+        {
+            groupFound = group;
+        }
+        else
+        {
+            groupFound = nil;
+        }
+     
+     }
+    failureBlock:^(NSError* error)
+        {
+            NSLog(@"failed to enumerate albums:\n Error: %@", error); //[error localizedDescription]);
+        }];
+    
+    return groupFound;
+   
+}*/
+
+/*
+ SaveImage: Saves processed images back in the photo gallery
+            1. Searches for the given album name in the gallery
+            2. If album found, adds the picture to the galler
+ 
+            3. If album not found, create the album
+            4. Save the picture in the newly created album
+ 
+            Enumerates through all ablums in the gallery 
+*/
+
+-(BOOL) addPicture:(ALAssetsLibrary *)lib toGroup:(ALAssetsGroup *)group
+{
+    __block int counter = 0;
+    BOOL added = false;
+    
+    for (int i = 0; i <[urlA count]; i++)
+    {
+        [library assetForURL:urlA[i] resultBlock:^(ALAsset *asset) //converts url to a picture
+         {
+             if(asset != nil) //if the picture isnt null, add it to the group
+             {
+                 [group addAsset:asset]; //Adds picture to the album
+                 counter++;
+             }
+         }
+         
+        failureBlock:^(NSError *error){ NSLog(@"Failed to add picture to the album.\nError: %@", [error localizedDescription]); }];
+    }
+    
+    //if all pictures are added successfully
+    if(counter == [urlA count])
+        added = TRUE;
+    
+    return added;
+}
+
+
+//-(void)SaveImage:(NSURL *)url toAlbum:(NSString*)album
+-(void)SaveImage:(NSString *)album
+{
+    __block BOOL albumFound = false;
+    __block BOOL addedSuccessfully = false;
+    //__block ALAssetsLibrary *library2 = library;
+    __block int counter = 0;
+   
+    
+    //Find album
     void (^ assetGroupEnumerator) ( ALAssetsGroup *, BOOL *)= ^(ALAssetsGroup *group, BOOL *stop)
     {
-        if([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:album])
+        if([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:album]) //found album
         {
-            [library assetForURL:url resultBlock:^(ALAsset *asset)
-             {
-                 if(asset != nil)
+            albumFound = TRUE;
+            //addedSuccessfully = [self addPicture:library toGroup:group];
+            
+            for (int i = 0; i <[urlA count]; i++)
+            {
+                [library assetForURL:urlA[i] resultBlock:^(ALAsset *asset) //converts url to a picture
                  {
-                     [group addAsset:asset];
+                     if(asset != nil) //if the picture isnt null, add it to the group
+                     {
+                         [group addAsset:asset]; //Adds picture to the album
+                         counter++;
+                     }
                  }
-             }
-                    failureBlock:^(NSError *error){ NSLog(@"operation was not successfull!"); } ];
+                 
+                        failureBlock:^(NSError *error){ NSLog(@"Failed to add picture to the album.\nError: %@", [error localizedDescription]); }];
+            }
+                  
+            
+            //album was found and picture was added to the added
+            //bail out of the method
+            //if(addedSuccessfully)
+                return;
         }
-    };
-    
-    [library enumerateGroupsWithTypes:ALAssetsGroupAll
-                           usingBlock:assetGroupEnumerator
-                         failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
+        
+        //If the album doesnt exist
+        if(group == nil && albumFound == false)
+        {
+            ALAssetsLibrary * weakSelf = self;
+        
+            //Creates a new album
+            [library addAssetsGroupAlbumWithName:album resultBlock:^(ALAssetsGroup *group)
+             {
+                 for (int i = 0; i <[urlA count]; i++)
+                 {
+                    [weakSelf assetForURL:urlA[i] resultBlock:^(ALAsset *asset) //converts url to a picture
+                     {
+                         if(asset != nil) //if the picture isnt null, add it to the group
+                         {
+                          [group addAsset:asset]; //Adds picture to the newly created album
+                           addedSuccessfully = true;
+                         }
+                     }
+                          failureBlock:^(NSError *error)
+                     { NSLog(@"Failed to add picture to the album.\nError: %@", [error localizedDescription]); }];
+                 } }
+                                    failureBlock:^(NSError *error) {
+                NSLog(@"Error adding/creating album to the photoGallery");
+                                    }];
+                    
+            //should be the last iteration anyway, but just in case, bail out of the method
+            return;
+
+        }
+
+};
+    // search all photo albums in the library
+    [library enumerateGroupsWithTypes:ALAssetsGroupAlbum
+                        usingBlock:assetGroupEnumerator
+                         failureBlock:^(NSError *error)
+        {NSLog(@"There is an error with enumerating through albums");}];
 }
+
 
 -(NSArray*)getUIImage
 {

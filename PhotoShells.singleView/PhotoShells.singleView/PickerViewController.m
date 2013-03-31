@@ -32,7 +32,7 @@
     [super viewDidLoad];
     
     //picker = [[UIPickerView alloc] init; // initWithFrame:CGRectMake(100, 2, 320, 200)];
-    _inputArray = [[NSArray alloc] initWithObjects:@"Hourly", @"Daily", @"Weekly", nil];
+    _inputArray = [[NSArray alloc] initWithObjects:@"Single", @"Hourly", @"Daily", @"Weekly", nil];
     
     
     picker.delegate = self;
