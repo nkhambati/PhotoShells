@@ -59,8 +59,7 @@
 
 -(void)runFetchPictures
 {
-    picManager = [[PictureManager alloc] init];
-    [picManager fetchPictures];
+    [[PictureManager sharedPicManager] fetchPictures];
 }
 
 
