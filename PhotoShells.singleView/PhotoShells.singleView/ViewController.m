@@ -23,6 +23,7 @@
 {
     NSLog(@"in categorizeClicked");
     [[PictureManager sharedPicManager] fetchPictures];
+    [[PictureManager sharedPicManager] SaveImage:@"Documents"];
 }
 
 - (IBAction)imageProcessing:(id)sender {
@@ -59,6 +60,8 @@
 {
     [[PictureManager sharedPicManager] fetchPictures];
 }
+
+
 
 @end
 

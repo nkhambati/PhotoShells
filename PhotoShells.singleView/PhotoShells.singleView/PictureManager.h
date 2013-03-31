@@ -7,7 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#include <AssetsLibrary/AssetsLibrary.h> 
+#include <AssetsLibrary/AssetsLibrary.h>
+#include <AssetsLibrary/ALAssetsLibrary.h>
 #import "OCR.h"
 #import "CategorizationSettings.h"
 
@@ -20,14 +21,17 @@
     NSMutableArray *urlA;
     NSDate *lastUpdateDate;
     NSTimer *timer;
+    NSInteger count[2];
+   
 }
 
 +(PictureManager *)sharedPicManager;
 -(void)fetchPictures;
--(void)CopyPictureToAlbum:(NSURL *)url Location: (NSString *)album;
+-(void)SaveImage:(NSString *)album;
 -(NSArray*)getUIImage;
 -(NSMutableArray*)getURLs;
 -(void)setTimer;
 -(void)invalidateTimer;
+
 
 @end
