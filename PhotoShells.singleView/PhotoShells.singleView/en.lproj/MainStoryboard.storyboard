@@ -322,7 +322,7 @@
         <class className="PickerViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/PickerViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="picker" candidateClass="UIPickerView"/>
+                <relationship kind="outlet" name="picker" candidateClass="UIView"/>
             </relationships>
         </class>
         <class className="ViewController" superclassName="UIViewController">
