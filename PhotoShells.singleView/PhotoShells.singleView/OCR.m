@@ -10,10 +10,14 @@
 #include <QuartzCore/QuartzCore.h>
 #include <CoreImage/CoreImage.h>
 
+static float ent_threshold = 1.1;
+
 @implementation OCR
+
 
 - (void)extractText:(NSArray *)imgArray
 {
+    
     //NSLog(@"in extract text");
     if([imgArray count]>0)
     {
@@ -91,6 +95,16 @@
         }
     }
 }
+/*
+-(int *) categorizeImages:(float[]) entropy_array
+{
+    NSInteger[] text_image_indices;
+    for (int cat = 0; cat < [entropy_array count]; cat++) {
+        if (entropy_array[cat] < ent_threshold) {
+            <#statements#>
+        }
+    }
+}*/
 
 -(UIImage *)resizeImage:(UIImage *)image
 {
