@@ -23,6 +23,7 @@
     NSTimer *timer;
     NSInteger count[2];
     NSMutableArray *imgURLs;
+    NSArray *imgIndices;
    
 }
 

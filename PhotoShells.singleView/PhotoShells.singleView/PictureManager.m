@@ -58,6 +58,7 @@ static PictureManager* _sharedPicManager = nil;
     library = [[ALAssetsLibrary alloc] init];
     urlA = [[NSMutableArray alloc] init];
     imgURLs = [[NSMutableArray alloc] init];
+    imgIndices = [[NSArray alloc] init];
     
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop)
     {
@@ -143,6 +144,8 @@ static PictureManager* _sharedPicManager = nil;
                                 urlA = [[NSMutableArray alloc] init];
                              imgURLs = nil;
                                 imgURLs = [[NSMutableArray alloc] init];
+                             imgIndices = nil;
+                                imgIndices = [[NSArray alloc] init];
                          }
                      }
                      
