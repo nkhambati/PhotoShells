@@ -160,7 +160,8 @@ static PictureManager* _sharedPicManager = nil;
     void (^ assetGroupEnumerator) ( ALAssetsGroup *, BOOL *)= ^(ALAssetsGroup *group, BOOL *stop)
     {
         //NSLog(@"in asset Group Enum");
-        if(group != nil)
+        //if(group != nil)
+        if([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:@"Saved Photos"] || [[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:@"Camera Roll"])
         {
             NSLog(@"Group Name: %@", [group valueForProperty:ALAssetsGroupPropertyName]);
             [group enumerateAssetsUsingBlock:assetEnumerator];
