@@ -3,7 +3,7 @@
 //  PhotoShells.singleView
 //
 //  Created by Nishrin Khambati on 13-03-07.
-//  Copyright (c) 2013 Vrinda Vaish. All rights reserved.
+//  Copyright (c) 2013 Nishrin Khambati. All rights reserved.
 //
 
 #import "OCR.h"
