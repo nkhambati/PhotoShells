@@ -11,6 +11,7 @@
 #include <CoreImage/CoreImage.h>
 
 static float ent_threshold = 1.1;
+int img_count = 0;
 
 @implementation OCR
 
@@ -21,6 +22,7 @@ static float ent_threshold = 1.1;
     //NSLog(@"in extract text");
     if([imgArray count]>0)
     {
+        img_count = [imgArray count];
         NSEnumerator *images = [imgArray objectEnumerator];
         UIImage *image = [[UIImage alloc] init];
         float img_entropies[[imgArray count]];
@@ -88,23 +90,42 @@ static float ent_threshold = 1.1;
             //NSLog(@"%@", [tesseract recognizedText]);
 
         }
+        
+        //out of while loop
         NSLog(@"Entropies");
         
         for (int i = 0; i < entropy_counter; i++) {
             NSLog(@"%d - %f", i, img_entropies[i]);
         }
+        
+        //NEED TO CREATE A DYNAMIC ARRAY FOR INDICES
+        NSMutableArray* text_image_indices = [[NSMutableArray alloc] init];
+
+                
+        [self categorizeImages:img_entropies :text_image_indices];
+        
+        NSLog(@"text_image_indices: ");
+        
+        for (int i = 0; i < [text_image_indices count]; i++) {            
+            NSLog(@"%@", text_image_indices[i]);
+        }
+
     }
 }
-/*
--(int *) categorizeImages:(float[]) entropy_array
+-(void) categorizeImages:(float[]) entropy_array :(NSMutableArray *) text_image_indices
 {
-    NSInteger[] text_image_indices;
-    for (int cat = 0; cat < [entropy_array count]; cat++) {
+    //int index = 0;
+    
+    NSLog(@"threshold: %f", ent_threshold);
+    
+    for (int cat = 0; cat < img_count; cat++) {
         if (entropy_array[cat] < ent_threshold) {
-            <#statements#>
+            [text_image_indices addObject:[NSNumber numberWithInteger:cat]];
+            //text_image_indices[index] = cat;
+            //index++;
         }
     }
-}*/
+}
 
 -(UIImage *)resizeImage:(UIImage *)image
 {
