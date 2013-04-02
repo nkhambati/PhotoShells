@@ -58,6 +58,7 @@ static PictureManager* _sharedPicManager = nil;
     library = [[ALAssetsLibrary alloc] init];
     urlA = [[NSMutableArray alloc] init];
     imgURLs = [[NSMutableArray alloc] init];
+    imgIndices = [[NSArray alloc] init];
     
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop)
     {
@@ -130,6 +131,8 @@ static PictureManager* _sharedPicManager = nil;
                              OCR *ocr = [[OCR alloc] init];
                              [ocr extractText:imgA];
                              
+                             [self SaveImage:@"Documents"];
+                             
                             // Re-declaring variables
                              imagesFound = 0;
                              imgA = nil;
@@ -141,8 +144,6 @@ static PictureManager* _sharedPicManager = nil;
                                 library = [[ALAssetsLibrary alloc] init];
                              urlA = nil;
                                 urlA = [[NSMutableArray alloc] init];
-                             imgURLs = nil;
-                                imgURLs = [[NSMutableArray alloc] init];
                          }
                      }
                      
@@ -258,9 +259,9 @@ static PictureManager* _sharedPicManager = nil;
             albumFound = TRUE;
             //addedSuccessfully = [self addPicture:library toGroup:group];
             
-            for (int i = 0; i <[urlA count]; i++)
+            for (int i = 0; i <imgURLs.count; i++)
             {
-                [library assetForURL:urlA[i] resultBlock:^(ALAsset *asset) //converts url to a picture
+                [library assetForURL:imgURLs[i] resultBlock:^(ALAsset *asset) //converts url to a picture
                  {
                      if(asset != nil) //if the picture isnt null, add it to the group
                      {
@@ -281,29 +282,38 @@ static PictureManager* _sharedPicManager = nil;
         
         //If the album doesnt exist
         if(group == nil && albumFound == false)
-        {
-            ALAssetsLibrary * weakSelf = self;
-        
+        {        
             //Creates a new album
             [library addAssetsGroupAlbumWithName:album resultBlock:^(ALAssetsGroup *group)
              {
-                 for (int i = 0; i <[urlA count]; i++)
+                 NSLog(@"Added Album");
+                [_sharedPicManager->library enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop)
                  {
-                    [weakSelf assetForURL:urlA[i] resultBlock:^(ALAsset *asset) //converts url to a picture
-                     {
-                         if(asset != nil) //if the picture isnt null, add it to the group
-                         {
-                          [group addAsset:asset]; //Adds picture to the newly created album
-                           addedSuccessfully = true;
-                         }
-                     }
-                          failureBlock:^(NSError *error)
-                     { NSLog(@"Failed to add picture to the album.\nError: %@", [error localizedDescription]); }];
-                 } }
-                                    failureBlock:^(NSError *error) {
-                NSLog(@"Error adding/creating album to the photoGallery");
-                                    }];
-                    
+                    if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:album])
+                    {                        
+                        for (int i = 0; i <imgURLs.count; i++)
+                        {
+                            [_sharedPicManager->library assetForURL:imgURLs[i] resultBlock:^(ALAsset *asset) //converts url to a picture
+                             {
+                                 if(asset != nil) //if the picture isnt null, add it to the group
+                                 {
+                                     [group addAsset:asset]; //Adds picture to the album
+                                     addedSuccessfully = true;
+                                 }
+                             }
+
+                        failureBlock:^(NSError *error){ NSLog(@"Failed to add picture to the album.\nError: %@", [error localizedDescription]); }];
+                        }
+
+                    }
+                }
+                failureBlock:^(NSError* error){NSLog(@"failed to enumerate albums:\nError: %@", [error localizedDescription]);}];
+                 
+                 
+                 
+             }
+            failureBlock:^(NSError *error) {NSLog(@"Error adding/creating album to the photoGallery");}];
+                                
             //should be the last iteration anyway, but just in case, bail out of the method
             return;
 
