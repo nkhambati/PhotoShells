@@ -131,7 +131,7 @@ static PictureManager* _sharedPicManager = nil;
                              OCR *ocr = [[OCR alloc] init];
                              [ocr extractText:imgA];
                              
-                             [self SaveImage:@"Documents"];
+                             //[self SaveImage:@"Documents"];
                              
                             // Re-declaring variables
                              imagesFound = 0;
