@@ -26,12 +26,10 @@
     //[[PictureManager sharedPicManager] SaveImage:@"Documents"];
 }
 
-- (IBAction)imageProcessing:(id)sender {
+- (IBAction)imageProcessing:(id)sender
+{
+    
 }
-
-- (IBAction)folderSettings:(id)sender {
-}
-
 - (IBAction)categorisationLogs:(id)sender {
 }
 

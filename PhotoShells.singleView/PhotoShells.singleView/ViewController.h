@@ -19,8 +19,6 @@
 
 //Home Page UI buttons
 - (IBAction)imageProcessing:(id)sender;
-- (IBAction)folderSettings:(id)sender;
-- (IBAction)categorisationLogs:(id)sender;
 - (IBAction)appSwitch:(UISwitch *)sender;
 
 
