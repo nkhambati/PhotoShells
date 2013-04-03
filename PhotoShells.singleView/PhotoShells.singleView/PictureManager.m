@@ -131,10 +131,10 @@ static PictureManager* _sharedPicManager = nil;
                              // Running OCR
                              OCR *ocr = [[OCR alloc] init];
                              int tempVar;
-                             int numAlbums = 0;
+                             int numElements = 0;
                              
                              if(imgIndices)
-                                numAlbums = imgIndices.count;
+                                numElements = imgIndices.count;
                              
                              NSArray *temp = [[NSArray alloc] initWithArray:[ocr extractText:imgA]];
                              
@@ -142,7 +142,7 @@ static PictureManager* _sharedPicManager = nil;
                              for(int i = 0; i < temp.count; i++)
                              {
                                  if(imgIndices)
-                                     tempVar = [temp[i] intValue] + numAlbums;
+                                     tempVar = [temp[i] intValue] + numElements;
                                  else
                                      tempVar = [temp[i] intValue];
                                  
