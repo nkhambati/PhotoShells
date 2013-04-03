@@ -48,7 +48,7 @@ static PictureManager* _sharedPicManager = nil;
         library = [[ALAssetsLibrary alloc] init];
         urlA = [[NSMutableArray alloc] init];
         imgURLs = [[NSMutableArray alloc] init];
-        imgIndices = [[NSArray alloc] init];
+        imgIndices = [[NSMutableArray alloc] init];
     }
     
 	return self;
@@ -86,7 +86,7 @@ static PictureManager* _sharedPicManager = nil;
                          lastUpdateDate = [[NSDate alloc] init];
                          NSDateFormatter *df = [[NSDateFormatter alloc] init];
                          [df setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-                         lastUpdateDate = [df dateFromString: @"2013-01-01 00:00:01"];
+                         lastUpdateDate = [df dateFromString: @"2000-01-01 00:00:01"];
 
                      }
                      
@@ -120,10 +120,25 @@ static PictureManager* _sharedPicManager = nil;
                          {
                              // Running OCR
                              OCR *ocr = [[OCR alloc] init];
-                             [ocr extractText:imgA];
+                             int tempVar;
+                             int lastElement = 0;
+                             int nextElement = 0;
+                                                          
+                             if(imgIndices.count != 0)
+                             {
+                                lastElement = [imgIndices[imgIndices.count - 1] intValue];
+                                nextElement = lastElement + 1;
+                             }
                              
-                             //[self SaveImage:@"Documents"];
+                             NSArray *temp = [[NSArray alloc] initWithArray:[ocr extractText:imgA]];
                              
+                             //Adding to imgIndices
+                             for(int i = 0; i < temp.count; i++)
+                             {
+                                 tempVar = [temp[i] intValue] + nextElement;
+                                 [imgIndices addObject:[NSNumber numberWithInteger:tempVar]];
+                             }
+                                                          
                             // Re-declaring variables
                              imagesFound = 0;
                              imgA = nil;
@@ -250,9 +265,10 @@ static PictureManager* _sharedPicManager = nil;
             albumFound = TRUE;
             //addedSuccessfully = [self addPicture:library toGroup:group];
             
-            for (int i = 0; i <imgURLs.count; i++)
+            for (int i = 0; i <imgIndices.count; i++)
             {
-                [library assetForURL:imgURLs[i] resultBlock:^(ALAsset *asset) //converts url to a picture
+                int index = [[_sharedPicManager->imgIndices objectAtIndex:i] intValue];
+                [library assetForURL:imgURLs[index] resultBlock:^(ALAsset *asset) //converts url to a picture
                  {
                      if(asset != nil) //if the picture isnt null, add it to the group
                      {
@@ -273,7 +289,7 @@ static PictureManager* _sharedPicManager = nil;
         
         //If the album doesnt exist
         if(group == nil && albumFound == false)
-        {        
+        {
             //Creates a new album
             [library addAssetsGroupAlbumWithName:album resultBlock:^(ALAssetsGroup *group)
              {
@@ -281,14 +297,17 @@ static PictureManager* _sharedPicManager = nil;
                 [_sharedPicManager->library enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop)
                  {
                     if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:album])
-                    {                        
-                        for (int i = 0; i <imgURLs.count; i++)
+                    {
+                        NSLog(@"imgIndices: %@", _sharedPicManager->imgIndices);
+                        for (int i = 0; i <imgIndices.count; i++)
                         {
-                            [_sharedPicManager->library assetForURL:imgURLs[i] resultBlock:^(ALAsset *asset) //converts url to a picture
+                            int index = [[_sharedPicManager->imgIndices objectAtIndex:i] intValue];
+                            [_sharedPicManager->library assetForURL:imgURLs[index] resultBlock:^(ALAsset *asset) //converts url to a picture
                              {
                                  if(asset != nil) //if the picture isnt null, add it to the group
                                  {
                                      [group addAsset:asset]; //Adds picture to the album
+
                                      addedSuccessfully = true;
                                  }
                              }

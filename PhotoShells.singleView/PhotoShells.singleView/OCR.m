@@ -16,8 +16,9 @@ int img_count = 0;
 @implementation OCR
 
 
-- (void)extractText:(NSArray *)imgArray
+- (NSArray *)extractText:(NSArray *)imgArray
 {
+    NSMutableArray *text_image_indices = [[NSMutableArray alloc] init];
     
     //NSLog(@"in extract text");
     if([imgArray count]>0)
@@ -99,7 +100,7 @@ int img_count = 0;
         }
         
         //NEED TO CREATE A DYNAMIC ARRAY FOR INDICES
-        NSMutableArray* text_image_indices = [[NSMutableArray alloc] init];
+        text_image_indices = [[NSMutableArray alloc] init];
 
                 
         [self categorizeImages:img_entropies :text_image_indices];
@@ -111,12 +112,13 @@ int img_count = 0;
         }
 
     }
+    return text_image_indices;
 }
 -(void) categorizeImages:(float[]) entropy_array :(NSMutableArray *) text_image_indices
 {
     //int index = 0;
     
-    NSLog(@"threshold: %f", ent_threshold);
+    //NSLog(@"threshold: %f", ent_threshold);
     
     for (int cat = 0; cat < img_count; cat++) {
         if (entropy_array[cat] < ent_threshold) {
@@ -239,7 +241,7 @@ int img_count = 0;
     for (p_count = 0; p_count < 256; p_count++) {
         num_pixels += pixel_counts_array[p_count];
     }
-    NSLog(@"num_pixels: %f", num_pixels);
+    //NSLog(@"num_pixels: %f", num_pixels);
     
     for (p_count = 0; p_count < 256; p_count++) {
          num_occurrences = pixel_counts_array[p_count];
