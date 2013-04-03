@@ -86,7 +86,7 @@ static PictureManager* _sharedPicManager = nil;
                          lastUpdateDate = [[NSDate alloc] init];
                          NSDateFormatter *df = [[NSDateFormatter alloc] init];
                          [df setDateFormat:@"yyyy-MM-dd hh:mm:ss"];
-                         lastUpdateDate = [df dateFromString: @"2013-01-01 00:00:01"];
+                         lastUpdateDate = [df dateFromString: @"2000-01-01 00:00:01"];
 
                      }
                      
@@ -131,21 +131,21 @@ static PictureManager* _sharedPicManager = nil;
                              // Running OCR
                              OCR *ocr = [[OCR alloc] init];
                              int tempVar;
-                             int numElements = 0;
-                             
-                             if(imgIndices)
-                                numElements = imgIndices.count;
+                             int lastElement = 0;
+                             int nextElement = 0;
+                                                          
+                             if(imgIndices.count != 0)
+                             {
+                                lastElement = [imgIndices[imgIndices.count - 1] intValue];
+                                nextElement = lastElement + 1;
+                             }
                              
                              NSArray *temp = [[NSArray alloc] initWithArray:[ocr extractText:imgA]];
                              
                              //Adding to imgIndices
                              for(int i = 0; i < temp.count; i++)
                              {
-                                 if(imgIndices)
-                                     tempVar = [temp[i] intValue] + numElements;
-                                 else
-                                     tempVar = [temp[i] intValue];
-                                 
+                                 tempVar = [temp[i] intValue] + nextElement;
                                  [imgIndices addObject:[NSNumber numberWithInteger:tempVar]];
                              }
                                                           
@@ -275,9 +275,10 @@ static PictureManager* _sharedPicManager = nil;
             albumFound = TRUE;
             //addedSuccessfully = [self addPicture:library toGroup:group];
             
-            for (int i = 0; i <imgURLs.count; i++)
+            for (int i = 0; i <imgIndices.count; i++)
             {
-                [library assetForURL:imgURLs[i] resultBlock:^(ALAsset *asset) //converts url to a picture
+                int index = [[_sharedPicManager->imgIndices objectAtIndex:i] intValue];
+                [library assetForURL:imgURLs[index] resultBlock:^(ALAsset *asset) //converts url to a picture
                  {
                      if(asset != nil) //if the picture isnt null, add it to the group
                      {
@@ -307,6 +308,7 @@ static PictureManager* _sharedPicManager = nil;
                  {
                     if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:album])
                     {
+                        NSLog(@"imgIndices: %@", _sharedPicManager->imgIndices);
                         for (int i = 0; i <imgIndices.count; i++)
                         {
                             int index = [[_sharedPicManager->imgIndices objectAtIndex:i] intValue];
