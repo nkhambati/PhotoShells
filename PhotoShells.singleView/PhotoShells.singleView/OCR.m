@@ -33,7 +33,7 @@ int img_count = 0;
         int entropy_counter = 0;
         while(image = [images nextObject])
         {
-            NSLog(@"image: %@", image);
+            //NSLog(@"image: %@", image);
 
             UIImage *image2 = [[UIImage alloc] init];
             image2 = [self resizeImage:image];
@@ -105,11 +105,11 @@ int img_count = 0;
                 
         [self categorizeImages:img_entropies :text_image_indices];
         
-        NSLog(@"text_image_indices: ");
+        /*NSLog(@"text_image_indices: ");
         
         for (int i = 0; i < [text_image_indices count]; i++) {            
             NSLog(@"%@", text_image_indices[i]);
-        }
+        }*/
 
     }
     return text_image_indices;
