@@ -20,7 +20,7 @@ static PictureManager* _sharedPicManager = nil;
 	@synchronized([PictureManager class])
 	{
 		if (!_sharedPicManager)
-			[[self alloc] init];
+			_sharedPicManager = [[self alloc] init];
         
 		return _sharedPicManager;
 	}
@@ -43,8 +43,13 @@ static PictureManager* _sharedPicManager = nil;
 -(id)init {
 	self = [super init];
 	if (self != nil) {
-		// initialize stuff here
-	}
+		imgA=[[NSArray alloc] init];
+        mtbA =[[NSMutableArray alloc]init];
+        library = [[ALAssetsLibrary alloc] init];
+        urlA = [[NSMutableArray alloc] init];
+        imgURLs = [[NSMutableArray alloc] init];
+        imgIndices = [[NSArray alloc] init];
+    }
     
 	return self;
 }
@@ -52,13 +57,9 @@ static PictureManager* _sharedPicManager = nil;
 -(void)fetchPictures
 {
     // Initializing Variables
-    imgA=[[NSArray alloc] init];
-    mtbA =[[NSMutableArray alloc]init];
+    
     NSMutableArray* urlDictionaries = [[NSMutableArray alloc] init];
-    library = [[ALAssetsLibrary alloc] init];
-    urlA = [[NSMutableArray alloc] init];
-    imgURLs = [[NSMutableArray alloc] init];
-    imgIndices = [[NSArray alloc] init];
+    
     
     void (^assetEnumerator)( ALAsset *, NSUInteger, BOOL *) = ^(ALAsset *result, NSUInteger index, BOOL *stop)
     {
@@ -131,7 +132,7 @@ static PictureManager* _sharedPicManager = nil;
                              OCR *ocr = [[OCR alloc] init];
                              [ocr extractText:imgA];
                              
-                             [self SaveImage:@"Documents"];
+                             //[self SaveImage:@"Documents"];
                              
                             // Re-declaring variables
                              imagesFound = 0;
