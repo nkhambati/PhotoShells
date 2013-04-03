@@ -13,7 +13,7 @@
 {
 }
 
-- (void)extractText:(NSArray *)imgArray;
+- (NSArray *)extractText:(NSArray *)imgArray;
 -(UIImage *)resizeImage:(UIImage *)image;
 -(UIImage *)grayScale:(UIImage *)image;
 -(unsigned char *) grayscalePixels:(UIImage *)image;
