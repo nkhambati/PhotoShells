@@ -269,7 +269,8 @@ static PictureManager* _sharedPicManager = nil;
         {
             albumFound = TRUE;
             //addedSuccessfully = [self addPicture:library toGroup:group];
-            NSLog(@"imgIndices: %@", _sharedPicManager->imgIndices);
+            if(!_sharedPicManager->imgIndices)
+                return;
             for (int i = 0; i <imgIndices.count; i++)
             {
                 int index = [[_sharedPicManager->imgIndices objectAtIndex:i] intValue];
@@ -304,6 +305,8 @@ static PictureManager* _sharedPicManager = nil;
                  {
                     if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:album])
                     {
+                        if(!_sharedPicManager->imgIndices)
+                            return;
                         if(imgIndices.count == 0 || !_sharedPicManager->imgIndices)
                             return;
                         for (int i = 0; i <imgIndices.count; i++)
@@ -360,7 +363,7 @@ static PictureManager* _sharedPicManager = nil;
 -(void)setTimer;
 {
     // TO DO: Delete this and uncomment the line following
-    timer = [NSTimer scheduledTimerWithTimeInterval:10.0
+    timer = [NSTimer scheduledTimerWithTimeInterval:5.0
                                              target:self
                                            selector:@selector(fetchPictures)
                                            userInfo:nil repeats:YES];
@@ -375,6 +378,5 @@ static PictureManager* _sharedPicManager = nil;
 {
     [timer invalidate];
 }
-
 
 @end
