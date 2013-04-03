@@ -94,13 +94,6 @@ static PictureManager* _sharedPicManager = nil;
                      NSDate *dateTaken = [asset valueForProperty:(ALAssetPropertyDate)];
                      NSComparisonResult comparisonResult = [dateTaken compare:lastUpdateDate];
                      
-                     //TO DO: Delete Commenting
-                    /* NSLog(@"lastUpdateDate: %@", lastUpdateDate);
-                     NSLog(@"UIImage: %@", [UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]);
-                     NSLog(@"Date: %@", [result valueForProperty:ALAssetPropertyDate]);
-                     NSLog(@"comparisonResult: %d", comparisonResult);
-                    */
-                     
                      if(comparisonResult > 0) //Pictures after the specified date
                      {
                          [mtbA addObject:[UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]];
@@ -110,7 +103,6 @@ static PictureManager* _sharedPicManager = nil;
                      if (imagesFound==count[groupsChecked])
                      {
                          imgA=[[NSArray alloc] initWithArray:mtbA];
-                         //NSLog(@"imgA: %@", imgA);
                          groupsChecked++;
                          
                          //If both "Saved Pictures" and "Camera Roll" have been checked, update lastUpdateDate to current date.
@@ -122,12 +114,10 @@ static PictureManager* _sharedPicManager = nil;
                          
                          if(!imgA || ![imgA count]) //If no new pictures found
                          {
-                             //NSLog(@"in the if");
                              return;
                          }
                          else
                          {
-                             //NSLog(@"Completing OCR");
                              // Running OCR
                              OCR *ocr = [[OCR alloc] init];
                              [ocr extractText:imgA];
@@ -140,11 +130,11 @@ static PictureManager* _sharedPicManager = nil;
                                 imgA=[[NSArray alloc] init];
                              mtbA = nil;
                                 mtbA =[[NSMutableArray alloc]init];
-                             //NSMutableArray* urlDictionaries = [[NSMutableArray alloc] init];
-                             library = nil;
+                            library = nil;
                                 library = [[ALAssetsLibrary alloc] init];
                              urlA = nil;
                                 urlA = [[NSMutableArray alloc] init];
+                             //[_sharedPicManager init];
                          }
                      }
                      
