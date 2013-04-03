@@ -10,7 +10,7 @@
 #include <QuartzCore/QuartzCore.h>
 #include <CoreImage/CoreImage.h>
 
-static float ent_threshold = 1.1;
+static float ent_threshold = 1.15;
 int img_count = 0;
 
 @implementation OCR

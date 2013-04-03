@@ -269,25 +269,9 @@ static PictureManager* _sharedPicManager = nil;
         {
             albumFound = TRUE;
             //addedSuccessfully = [self addPicture:library toGroup:group];
-            
-       /*     for (int i = 0; i <imgIndices.count; i++)
-            {
-                int index = [[_sharedPicManager->imgIndices objectAtIndex:i] intValue];
-                [_sharedPicManager->library assetForURL:imgURLs[index] resultBlock:^(ALAsset *asset) //converts url to a picture
-                 {
-                     if(asset != nil) //if the picture isnt null, add it to the group
-                     {
-                         [group addAsset:asset]; //Adds picture to the album
-                         
-                         addedSuccessfully = true;
-                     }
-                 }
-                 
-                                           failureBlock:^(NSError *error){ NSLog(@"Failed to add picture to the album.\nError: %@", [error localizedDescription]); }];
-            }*/
-
-            
-            for (int i = 0; i <imgURLs.count; i++)
+            if(!_sharedPicManager->imgIndices)
+                return;
+            for (int i = 0; i <imgIndices.count; i++)
             {
                 int index = [[_sharedPicManager->imgIndices objectAtIndex:i] intValue];
                 [library assetForURL:imgURLs[index] resultBlock:^(ALAsset *asset) //converts url to a picture
