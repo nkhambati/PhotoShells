@@ -48,7 +48,7 @@ static PictureManager* _sharedPicManager = nil;
         library = [[ALAssetsLibrary alloc] init];
         urlA = [[NSMutableArray alloc] init];
         imgURLs = [[NSMutableArray alloc] init];
-        imgIndices = [[NSArray alloc] init];
+        imgIndices = [[NSMutableArray alloc] init];
     }
     
 	return self;
@@ -130,10 +130,25 @@ static PictureManager* _sharedPicManager = nil;
                              //NSLog(@"Completing OCR");
                              // Running OCR
                              OCR *ocr = [[OCR alloc] init];
-                             [ocr extractText:imgA];
+                             int tempVar;
+                             int numElements = 0;
                              
-                             //[self SaveImage:@"Documents"];
+                             if(imgIndices)
+                                numElements = imgIndices.count;
                              
+                             NSArray *temp = [[NSArray alloc] initWithArray:[ocr extractText:imgA]];
+                             
+                             //Adding to imgIndices
+                             for(int i = 0; i < temp.count; i++)
+                             {
+                                 if(imgIndices)
+                                     tempVar = [temp[i] intValue] + numElements;
+                                 else
+                                     tempVar = [temp[i] intValue];
+                                 
+                                 [imgIndices addObject:[NSNumber numberWithInteger:tempVar]];
+                             }
+                                                          
                             // Re-declaring variables
                              imagesFound = 0;
                              imgA = nil;
@@ -283,7 +298,7 @@ static PictureManager* _sharedPicManager = nil;
         
         //If the album doesnt exist
         if(group == nil && albumFound == false)
-        {        
+        {
             //Creates a new album
             [library addAssetsGroupAlbumWithName:album resultBlock:^(ALAssetsGroup *group)
              {
@@ -291,14 +306,16 @@ static PictureManager* _sharedPicManager = nil;
                 [_sharedPicManager->library enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop)
                  {
                     if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:album])
-                    {                        
-                        for (int i = 0; i <imgURLs.count; i++)
+                    {
+                        for (int i = 0; i <imgIndices.count; i++)
                         {
-                            [_sharedPicManager->library assetForURL:imgURLs[i] resultBlock:^(ALAsset *asset) //converts url to a picture
+                            int index = [[_sharedPicManager->imgIndices objectAtIndex:i] intValue];
+                            [_sharedPicManager->library assetForURL:imgURLs[index] resultBlock:^(ALAsset *asset) //converts url to a picture
                              {
                                  if(asset != nil) //if the picture isnt null, add it to the group
                                  {
                                      [group addAsset:asset]; //Adds picture to the album
+
                                      addedSuccessfully = true;
                                  }
                              }
