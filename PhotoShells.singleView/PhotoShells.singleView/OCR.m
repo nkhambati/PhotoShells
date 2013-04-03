@@ -32,7 +32,7 @@ int img_count = 0;
         int entropy_counter = 0;
         while(image = [images nextObject])
         {
-            NSLog(@"image: %@", image);
+            //NSLog(@"image: %@", image);
 
             UIImage *image2 = [[UIImage alloc] init];
             image2 = [self resizeImage:image];
