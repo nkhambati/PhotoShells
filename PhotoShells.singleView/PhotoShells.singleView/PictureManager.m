@@ -56,7 +56,6 @@ static PictureManager* _sharedPicManager = nil;
 
 -(void)fetchPictures
 {
-    // Initializing Variables
     
     NSMutableArray* urlDictionaries = [[NSMutableArray alloc] init];
     
@@ -73,6 +72,7 @@ static PictureManager* _sharedPicManager = nil;
                 
                 NSURL *url= (NSURL*) [[result defaultRepresentation]url];
                 [urlA addObject:url];
+                //NSLog(@"url is: %@", url);
                 
                 [library assetForURL:url resultBlock:^(ALAsset *asset)
                  {
@@ -94,23 +94,15 @@ static PictureManager* _sharedPicManager = nil;
                      NSDate *dateTaken = [asset valueForProperty:(ALAssetPropertyDate)];
                      NSComparisonResult comparisonResult = [dateTaken compare:lastUpdateDate];
                      
-                     //TO DO: Delete Commenting
-                    /* NSLog(@"lastUpdateDate: %@", lastUpdateDate);
-                     NSLog(@"UIImage: %@", [UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]);
-                     NSLog(@"Date: %@", [result valueForProperty:ALAssetPropertyDate]);
-                     NSLog(@"comparisonResult: %d", comparisonResult);
-                    */
-                     
                      if(comparisonResult > 0) //Pictures after the specified date
                      {
                          [mtbA addObject:[UIImage imageWithCGImage:[[asset  defaultRepresentation] fullScreenImage]]];
-                         [imgURLs addObject:url];
+                         [_sharedPicManager->imgURLs addObject:url];
                      }
                      
                      if (imagesFound==count[groupsChecked])
                      {
                          imgA=[[NSArray alloc] initWithArray:mtbA];
-                         //NSLog(@"imgA: %@", imgA);
                          groupsChecked++;
                          
                          //If both "Saved Pictures" and "Camera Roll" have been checked, update lastUpdateDate to current date.
@@ -118,16 +110,15 @@ static PictureManager* _sharedPicManager = nil;
                          {
                              //Get Current Date to update lastUpdateDate for future fetches
                              lastUpdateDate = [NSDate date];
+                             NSLog(@"lastUpdateDate: %@", lastUpdateDate);
                          }
                          
                          if(!imgA || ![imgA count]) //If no new pictures found
                          {
-                             //NSLog(@"in the if");
                              return;
                          }
                          else
                          {
-                             //NSLog(@"Completing OCR");
                              // Running OCR
                              OCR *ocr = [[OCR alloc] init];
                              int tempVar;
@@ -148,7 +139,9 @@ static PictureManager* _sharedPicManager = nil;
                                  tempVar = [temp[i] intValue] + nextElement;
                                  [imgIndices addObject:[NSNumber numberWithInteger:tempVar]];
                              }
-                                                          
+                             
+                             [self SaveImage:@"Documents"];
+                                                                                       
                             // Re-declaring variables
                              imagesFound = 0;
                              imgA = nil;
@@ -156,10 +149,11 @@ static PictureManager* _sharedPicManager = nil;
                              mtbA = nil;
                                 mtbA =[[NSMutableArray alloc]init];
                              //NSMutableArray* urlDictionaries = [[NSMutableArray alloc] init];
-                             library = nil;
-                                library = [[ALAssetsLibrary alloc] init];
+                             //library = nil;
+                                //library = [[ALAssetsLibrary alloc] init];
                              urlA = nil;
                                 urlA = [[NSMutableArray alloc] init];
+                             //[_sharedPicManager init];
                          }
                      }
                      
@@ -191,6 +185,7 @@ static PictureManager* _sharedPicManager = nil;
     
     [library enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:assetGroupEnumerator
                          failureBlock:^(NSError *error) {NSLog(@"There is an error");}];
+    
     return;
 }
 
@@ -313,6 +308,7 @@ static PictureManager* _sharedPicManager = nil;
             //if(addedSuccessfully)
                 return;
         }
+
         
         //If the album doesnt exist
         if(group == nil && albumFound == false)
@@ -325,7 +321,10 @@ static PictureManager* _sharedPicManager = nil;
                  {
                     if ([[group valueForProperty:ALAssetsGroupPropertyName] isEqualToString:album])
                     {
-                        NSLog(@"imgIndices: %@", _sharedPicManager->imgIndices);
+                        if(!_sharedPicManager->imgIndices)
+                            return;
+                        if(imgIndices.count == 0 || !_sharedPicManager->imgIndices)
+                            return;
                         for (int i = 0; i <imgIndices.count; i++)
                         {
                             int index = [[_sharedPicManager->imgIndices objectAtIndex:i] intValue];
@@ -380,7 +379,7 @@ static PictureManager* _sharedPicManager = nil;
 -(void)setTimer;
 {
     // TO DO: Delete this and uncomment the line following
-    timer = [NSTimer scheduledTimerWithTimeInterval:10.0
+    timer = [NSTimer scheduledTimerWithTimeInterval:5.0
                                              target:self
                                            selector:@selector(fetchPictures)
                                            userInfo:nil repeats:YES];
@@ -395,6 +394,5 @@ static PictureManager* _sharedPicManager = nil;
 {
     [timer invalidate];
 }
-
 
 @end

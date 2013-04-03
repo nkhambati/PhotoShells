@@ -105,11 +105,11 @@ int img_count = 0;
                 
         [self categorizeImages:img_entropies :text_image_indices];
         
-        NSLog(@"text_image_indices: ");
+        /*NSLog(@"text_image_indices: ");
         
         for (int i = 0; i < [text_image_indices count]; i++) {            
             NSLog(@"%@", text_image_indices[i]);
-        }
+        }*/
 
     }
     return text_image_indices;

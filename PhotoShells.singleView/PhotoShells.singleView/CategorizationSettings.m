@@ -17,7 +17,7 @@ static CategorizationSettings* _sharedCatSettings = nil;
 	@synchronized([CategorizationSettings class])
 	{
 		if (!_sharedCatSettings)
-			[[self alloc] init];
+			_sharedCatSettings = [[self alloc] init];
         
 		return _sharedCatSettings;
 	}
