@@ -12,6 +12,9 @@
 
 static float ent_threshold = 1.15;
 int img_count = 0;
+double entropy_total = 0;
+double mean_ent = 0;
+double std_ent = 0;
 
 @implementation OCR
 
@@ -20,6 +23,8 @@ int img_count = 0;
 {
     NSMutableArray *text_image_indices = [[NSMutableArray alloc] init];
     
+    int entropy_counter;
+    
     //NSLog(@"in extract text");
     if([imgArray count]>0)
     {
@@ -27,10 +32,14 @@ int img_count = 0;
         NSEnumerator *images = [imgArray objectEnumerator];
         UIImage *image = [[UIImage alloc] init];
         float img_entropies[[imgArray count]];
+        
+        for (int img = 0; img < [imgArray count]; img++) {
+            img_entropies[img] = 0;
+        }
     
       //  Tesseract* tesseract = [[Tesseract alloc] initWithDataPath:@"tessdata" language:@"eng"];
         
-        int entropy_counter = 0;
+         entropy_counter = 0;
         while(image = [images nextObject])
         {
             //NSLog(@"image: %@", image);
@@ -85,7 +94,12 @@ int img_count = 0;
             //call the entropy function to get the image entropy
             img_entropies[entropy_counter] = [self ImageEntropy:pixelProbabilityArray];
             //NSLog(@"Entropy %d: %f", entropy_counter, img_entropies[entropy_counter]);
+            
+            entropy_total += img_entropies[entropy_counter];
             entropy_counter++;
+            
+            
+            
             //[tesseract setImage:image2];
             //[tesseract recognize];
             //NSLog(@"%@", [tesseract recognizedText]);
@@ -98,6 +112,20 @@ int img_count = 0;
         for (int i = 0; i < entropy_counter; i++) {
             NSLog(@"%d - %f", i, img_entropies[i]);
         }
+        NSLog(@"ent_total: %f", entropy_total);
+        mean_ent = entropy_total/entropy_counter;
+        NSLog(@"mean: %f", mean_ent );
+        
+        double sum = 0;
+        for (int s = 0; s < entropy_counter; s++) {
+            double sub = img_entropies[s]-mean_ent;
+            double square = pow(2.0, sub);
+            sum += square;
+        }
+        
+        double value = sum/(entropy_counter - 1);
+        std_ent = sqrt(value);
+        NSLog(@"std: %f", std_ent );
         
         //NEED TO CREATE A DYNAMIC ARRAY FOR INDICES
         text_image_indices = [[NSMutableArray alloc] init];
